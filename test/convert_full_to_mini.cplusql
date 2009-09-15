@@ -1,0 +1,147 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      convert_full_to_mini.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Mar 16 13:44:04 EST 2003 on circe.looksmart.net
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: convert_full_to_mini.cplusql,v 1.7 2003/06/09 14:44:11 djain Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream historic_ad_dim using files ( "convert_full_to_mini.input.txt" ) delimiter "|"
+	columns ( AD_KEY,AD_CODE,STATE,OBSOLETE_FLAG,LAST_DAY_KEY,STREAM_ID,STREAM_NAME,FIRST_DAY_KEY,METADATA_COMPLETE_FLAG,GRAPHICAL_AD_FLAG,CM_FLAG,EDIT_DATE_YYYYMMDD,EDIT_DAY_KEY,IO_ITEM_ID,IO_ITEM_NAME,LINKTO_URL,LISTING_ID,LOG_COMP_ID,COMP_ID,IO_ID,IO_NUMBER,IO_NAME,CAMPAIGN_START_DATE_YYYYMMDD,CAMPAIGN_START_DAY_KEY,CAMPAIGN_END_DATE_YYYYMMDD,CAMPAIGN_END_DAY_KEY,COMPONENT_START_DATE_YYYYMMDD,COMPONENT_START_DAY_KEY,COMPONENT_END_DATE_YYYYMMDD,COMPONENT_END_DAY_KEY,WBS_FLAG,ADVERTISER_ID,ADVERTISER_NAME,SALESPERSON_ID,SALESPERSON_NAME,NON_US_FLAG,AFFILIATE_FLAG,NON_BILLABLE_FLAG,ESTIMATED_CPC_FLAG,PRODUCT_ID,WBS_PRODUCT_NAME,LISTING_TITLE,LISTING_TEXT,LL_WEBSITE_IS_EXCLUSION_EXEMPT,ACC_AD_GROUP_ID,CAMPAIGN_NAME,CAMPAIGN_GROUP_ID,CAMPAIGN_GROUP_NAME,ACC_CREATIVE_ID,ACC_AD_DESCRIPTION,IMAGE_SOURCE,ACC_ADMAP,HTML_SOURCE,ALTERNATE_TEXT,AD_FORMAT_ID,AD_FORMAT_NAME,AD_FORMAT_DESC,ACC_SZ_ID,ACC_SZNAME,ACC_WIDTH,ACC_HEIGHT,TEST_AD_FLAG,TEST_INDEX_FLAG,COMPONENT_CPM,IO_ITEM_CPM,EFFECTIVE_CPM,COMPONENT_CPC,IO_ITEM_CPC,EFFECTIVE_CPC,ITEM_LEVEL_COST_FLAG,LEGACY_URL_FLAG,LEGACY_AD_NAME,TEST_AD_DESCRIPTION,LL_ACCOUNT_ID,LL_ACCOUNT_EDIT_ID,LL_ACCOUNT_IS_BILLABLE_FLAG,LL_ACCOUNT_BILLABILITY_REASON,LL_ACCOUNT_STATE_ID,LL_ACCOUNT_STATE,LL_ACCOUNT_NAME,LL_BILL_WITH_ACCOUNT_ID,LL_IS_CPA,LL_FREE_REFILL,LL_SERVICE_LEVEL_ID,LL_SERVICE_LEVEL,LL_CLIENT_TYPE_ID,LL_CLIENT_TYPE,LL_PERIOD_START_DAY_OF_MONTH,LL_SALES_REP_USER_ID,LL_SALES_REP_FNAME,LL_SALES_REP_LNAME,LL_PRODUCTION_CONTACT_USER_ID,LL_PRODUCTION_CONTACT_FNAME,LL_PRODUCTION_CONTACT_LNAME,LL_CAMPAIGN_ID,LL_CAMPAIGN_EDIT_ID,LL_CAMPAIGN_IS_BILLABLE_FLAG,LL_CAMPAIGN_BILLABILITY_REASON,LL_CAMPAIGN_IS_BUDGET_OVERRIDE,LL_CAMPAIGN_STATE_ID,LL_CAMPAIGN_STATE,LL_CAMPAIGN_NAME,LL_FLIGHT_START_DATE_YYYYMMDD,LL_FLIGHT_START_DAY_KEY,LL_FLIGHT_END_DATE_YYYYMMDD,LL_FLIGHT_END_DAY_KEY,LL_BUDGET )
+	;
+
+#Command to build the user column expressions
+#$ . /prod/bi/lksm_home/etc/batch/client.cfg
+#$ echo $MINI_AD_DIM_FIELDLIST | tr ',' '\n'|perl -pe 's/\s*(\w+)?.*/$1/;' | grep -v ^$| perl -pe 's/(\w+)?.*/x$1 historic_ad_dim.$1,/;'|grep -v ^$
+
+create stream mini_ad_dim using historic_ad_dim
+	usercolumn
+		xMINI_AD_KEY crc48(
+						join (
+							(
+							historic_ad_dim.ACC_AD_GROUP_ID,
+							historic_ad_dim.LL_ACCOUNT_ID,
+							historic_ad_dim.LL_ACCOUNT_EDIT_ID,
+							historic_ad_dim.LL_CAMPAIGN_ID,
+							historic_ad_dim.LL_CAMPAIGN_EDIT_ID,
+							if (strcmp( historic_ad_dim.ACC_AD_GROUP_ID,""))
+							{	
+								historic_ad_dim.COMP_ID
+							}else{
+								""
+							},
+							historic_ad_dim.LOG_COMP_ID,
+							historic_ad_dim.TEST_AD_FLAG,
+							historic_ad_dim.TEST_AD_DESCRIPTION,
+							historic_ad_dim.LEGACY_AD_NAME
+							), "-" )
+						),
+		xMINI_AD_CODE join (
+						(
+						historic_ad_dim.ACC_AD_GROUP_ID,
+						historic_ad_dim.LL_ACCOUNT_ID,
+						historic_ad_dim.LL_ACCOUNT_EDIT_ID,
+						historic_ad_dim.LL_CAMPAIGN_ID,
+						historic_ad_dim.LL_CAMPAIGN_EDIT_ID,
+						if (strcmp( historic_ad_dim.ACC_AD_GROUP_ID,""))
+						{	
+							historic_ad_dim.COMP_ID
+						}else{
+							""
+						},
+						historic_ad_dim.LOG_COMP_ID,
+						historic_ad_dim.TEST_AD_FLAG,
+						historic_ad_dim.TEST_AD_DESCRIPTION,
+						historic_ad_dim.LEGACY_AD_NAME
+						), "-" ),
+		xSTATE historic_ad_dim.STATE,
+		xOBSOLETE_FLAG historic_ad_dim.OBSOLETE_FLAG,
+		xLAST_DAY_KEY "${DAY_KEY}",
+		xSTREAM_ID historic_ad_dim.STREAM_ID,
+		xSTREAM_NAME historic_ad_dim.STREAM_NAME,
+		xFIRST_DAY_KEY  "${DAY_KEY}",
+		xMETADATA_COMPLETE_FLAG historic_ad_dim.METADATA_COMPLETE_FLAG,
+		xGRAPHICAL_AD_FLAG historic_ad_dim.GRAPHICAL_AD_FLAG,
+		xLOG_COMP_ID historic_ad_dim.LOG_COMP_ID,
+		xCOMP_ID historic_ad_dim.COMP_ID,
+		xIO_ID historic_ad_dim.IO_ID,
+		xIO_NUMBER historic_ad_dim.IO_NUMBER,
+		xIO_NAME historic_ad_dim.IO_NAME,
+		xCAMPAIGN_START_DATE_YYYYMMDD historic_ad_dim.CAMPAIGN_START_DATE_YYYYMMDD,
+		xCAMPAIGN_START_DAY_KEY historic_ad_dim.CAMPAIGN_START_DAY_KEY,
+		xCAMPAIGN_END_DATE_YYYYMMDD historic_ad_dim.CAMPAIGN_END_DATE_YYYYMMDD,
+		xCAMPAIGN_END_DAY_KEY historic_ad_dim.CAMPAIGN_END_DAY_KEY,
+		xCOMPONENT_START_DATE_YYYYMMDD historic_ad_dim.COMPONENT_START_DATE_YYYYMMDD,
+		xCOMPONENT_START_DAY_KEY historic_ad_dim.COMPONENT_START_DAY_KEY,
+		xCOMPONENT_END_DATE_YYYYMMDD historic_ad_dim.COMPONENT_END_DATE_YYYYMMDD,
+		xCOMPONENT_END_DAY_KEY historic_ad_dim.COMPONENT_END_DAY_KEY,
+		xWBS_FLAG historic_ad_dim.WBS_FLAG,
+		xADVERTISER_ID historic_ad_dim.ADVERTISER_ID,
+		xADVERTISER_NAME historic_ad_dim.ADVERTISER_NAME,
+		xSALESPERSON_ID historic_ad_dim.SALESPERSON_ID,
+		xSALESPERSON_NAME historic_ad_dim.SALESPERSON_NAME,
+		xNON_US_FLAG historic_ad_dim.NON_US_FLAG,
+		xAFFILIATE_FLAG historic_ad_dim.AFFILIATE_FLAG,
+		xNON_BILLABLE_FLAG historic_ad_dim.NON_BILLABLE_FLAG,
+		xESTIMATED_CPC_FLAG historic_ad_dim.ESTIMATED_CPC_FLAG,
+		xPRODUCT_ID historic_ad_dim.PRODUCT_ID,
+		xWBS_PRODUCT_NAME historic_ad_dim.WBS_PRODUCT_NAME,
+		xACC_AD_GROUP_ID historic_ad_dim.ACC_AD_GROUP_ID,
+		xCAMPAIGN_NAME historic_ad_dim.CAMPAIGN_NAME,
+		xCAMPAIGN_GROUP_ID historic_ad_dim.CAMPAIGN_GROUP_ID,
+		xCAMPAIGN_GROUP_NAME historic_ad_dim.CAMPAIGN_GROUP_NAME,
+		xACC_SZ_ID historic_ad_dim.ACC_SZ_ID,
+		xACC_SZNAME historic_ad_dim.ACC_SZNAME,
+		xACC_WIDTH historic_ad_dim.ACC_WIDTH,
+		xACC_HEIGHT historic_ad_dim.ACC_HEIGHT,
+		xTEST_AD_FLAG historic_ad_dim.TEST_AD_FLAG,
+		xCOMPONENT_CPM historic_ad_dim.COMPONENT_CPM,
+		xEFFECTIVE_CPM historic_ad_dim.EFFECTIVE_CPM,
+		xCOMPONENT_CPC historic_ad_dim.COMPONENT_CPC,
+		xEFFECTIVE_CPC historic_ad_dim.EFFECTIVE_CPC,
+		xLEGACY_AD_NAME historic_ad_dim.LEGACY_AD_NAME,
+		xLL_ACCOUNT_ID historic_ad_dim.LL_ACCOUNT_ID,
+		xLL_ACCOUNT_EDIT_ID historic_ad_dim.LL_ACCOUNT_EDIT_ID,
+		xLL_ACCOUNT_IS_BILLABLE_FLAG historic_ad_dim.LL_ACCOUNT_IS_BILLABLE_FLAG,
+		xLL_ACCOUNT_BILLABILITY_REASON historic_ad_dim.LL_ACCOUNT_BILLABILITY_REASON,
+		xLL_ACCOUNT_STATE_ID historic_ad_dim.LL_ACCOUNT_STATE_ID,
+		xLL_ACCOUNT_STATE historic_ad_dim.LL_ACCOUNT_STATE,
+		xLL_ACCOUNT_NAME historic_ad_dim.LL_ACCOUNT_NAME,
+		xLL_BILL_WITH_ACCOUNT_ID historic_ad_dim.LL_BILL_WITH_ACCOUNT_ID,
+		xLL_IS_CPA historic_ad_dim.LL_IS_CPA,
+		xLL_FREE_REFILL historic_ad_dim.LL_FREE_REFILL,
+		xLL_SERVICE_LEVEL_ID historic_ad_dim.LL_SERVICE_LEVEL_ID,
+		xLL_SERVICE_LEVEL historic_ad_dim.LL_SERVICE_LEVEL,
+		xLL_CLIENT_TYPE_ID historic_ad_dim.LL_CLIENT_TYPE_ID,
+		xLL_CLIENT_TYPE historic_ad_dim.LL_CLIENT_TYPE,
+		xLL_PERIOD_START_DAY_OF_MONTH historic_ad_dim.LL_PERIOD_START_DAY_OF_MONTH,
+		xLL_SALES_REP_USER_ID historic_ad_dim.LL_SALES_REP_USER_ID,
+		xLL_SALES_REP_FNAME historic_ad_dim.LL_SALES_REP_FNAME,
+		xLL_SALES_REP_LNAME historic_ad_dim.LL_SALES_REP_LNAME,
+		xLL_PRODUCTION_CONTACT_USER_ID historic_ad_dim.LL_PRODUCTION_CONTACT_USER_ID,
+		xLL_PRODUCTION_CONTACT_FNAME historic_ad_dim.LL_PRODUCTION_CONTACT_FNAME,
+		xLL_PRODUCTION_CONTACT_LNAME historic_ad_dim.LL_PRODUCTION_CONTACT_LNAME,
+		xLL_CAMPAIGN_ID historic_ad_dim.LL_CAMPAIGN_ID,
+		xLL_CAMPAIGN_EDIT_ID historic_ad_dim.LL_CAMPAIGN_EDIT_ID,
+		xLL_CAMPAIGN_IS_BILLABLE_FLAG historic_ad_dim.LL_CAMPAIGN_IS_BILLABLE_FLAG,
+		xLL_CAMPAIGN_BILLABILITY_REASON historic_ad_dim.LL_CAMPAIGN_BILLABILITY_REASON,
+		xLL_CAMPAIGN_IS_BUDGET_OVERRIDE historic_ad_dim.LL_CAMPAIGN_IS_BUDGET_OVERRIDE,
+		xLL_CAMPAIGN_STATE_ID historic_ad_dim.LL_CAMPAIGN_STATE_ID,
+		xLL_CAMPAIGN_STATE historic_ad_dim.LL_CAMPAIGN_STATE,
+		xLL_CAMPAIGN_NAME historic_ad_dim.LL_CAMPAIGN_NAME,
+		xLL_FLIGHT_START_DATE_YYYYMMDD historic_ad_dim.LL_FLIGHT_START_DATE_YYYYMMDD,
+		xLL_FLIGHT_START_DAY_KEY historic_ad_dim.LL_FLIGHT_START_DAY_KEY,
+		xLL_FLIGHT_END_DATE_YYYYMMDD historic_ad_dim.LL_FLIGHT_END_DATE_YYYYMMDD,
+		xLL_FLIGHT_END_DAY_KEY historic_ad_dim.LL_FLIGHT_END_DAY_KEY,
+		xLL_BUDGET historic_ad_dim.LL_BUDGET
+	(IGNORE_SOURCE_COLUMNS=1)
+	;
+
+create dest from mini_ad_dim filename "convert_full_to_mini.output.out";

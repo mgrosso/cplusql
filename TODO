@@ -1,0 +1,370 @@
+
+bug: presorted relations use new/delete 
+
+bug: exec_wrap seems to hang if command is used along with long running stream
+or even by itself.  try better test cases here.
+
+support "<expression> AS <name>" syntax in usercolumn lists
+    just to reduce typo thunking between sql and here.
+
+list functions and metric functions should be interchangeable,
+    at least for those that return expressions
+    sum,max,avg,first,last, etc...
+    then, you could make metrics into expressions and vica versa
+    sum( 1, 2, 3) same as sum in a group by, but sum in a 
+    non-group by relation would just return
+
+list functions
+    expression  metric(list);//for all unary groupby metrics
+    expression  metric(list,list);//for all binary groupby metrics
+
+    expression  ca([ad]*)r (list)
+    list        cd([ad]*)r (list)
+    expression  first(list)  ;//same as car
+    expression  last(list)  ;
+    expression  size(list)  ;
+    list        rest(list)  ;//same as cdr
+    expression  nth(i,list)
+    list        slice(start,count,list)
+    list        split(regex,expression)
+    list        range(regex,expression)
+    list        words(expression)
+    list        range(regex,expression)
+
+    bool        equal(list,list)
+    expression  mismatch(list,list);//index of first mismatch
+    expression  mismatch(list,list);//index of first mismatch
+
+    vector      vector(list)
+
+maps as expressions
+    map_expression  wordcount(text)
+
+    or more generally...
+
+    list            words(text)
+    map_expression  counts(list)
+
+    so...
+
+    map_expression  counts(words(text))
+
+    then subsequent relations could have  expressions that 
+    used dynamic cast at parse time to make sure they were pointed at a map.
+
+    list        map_keys(map_expression)
+    list        map_values(map_expression)
+    list        map_keys_sort_by_key(map_expression)
+    list        map_keys_sort_by_value(map_expression)
+    list        map_values_sort_by_key(map_expression)
+    list        map_values_sort_by_value(map_expression)
+    expression  map_expression[expression];
+
+
+vectors as expressions
+    take list as construction arg,
+    or just be pointer to named vector constructed from column
+    designate as column or row vector
+
+    then do linear algebra transforms on vectors and matrices.
+
+relations could support anonymous numbered columns, rather than named.
+
+optional default relation called stdin
+
+named matrix created from columns, eg expression_list
+
+
+
+create relation from rss_feed(expression)
+
+named vectors and expression_lists 
+
+map_value syntax sugar using square brackets
+
+
+merge join should support the outer_clause
+
+
+make sure large file support compiled for platforms that need that.
+command() hangs on some platforms (centos, smvdapp01)
+error string not there on some platforms (centos, smvdapp01)
+
+
+
+*** job control with dependencies ! *** 
+    parallelize
+    pipeline
+    restart transactionally
+    report errors
+
+normalize() syntax should not require two lists if no stop words used.
+
+pidfiles for cplusql
+
+autodetermine column names based on first line of input
+
+DONE optionally write out column names of a given relation to .meta file.
+
+have an option to create vcg graphs
+
+have a parse/lex only option that simply validates parse, and optionally
+    produces metadata and graph.
+
+
+record streams : just 1 column, no delimiter streams
+cat         (command lines )
+
+jobqstat    (command lines )
+stat        (command lines )
+
+DONE, but has performance bug - stream pg inputs from copy or query...
+DONE- threaded N buffered output
+DONE - threaded N buffered input
+- allow weak parse to deliver more columns than required, or fewer...
+- support for cronolog 
+
+for loop.
+
+create global/local options for map behavior when input is not unique.
+
+allow for anonymous relations to be embedded in create map foo using ... 
+
+validation
+
+cmd line shortcuts
+    -S --sql "sql text" acts like extractor, number and name of columns determined by result set
+        --DBHOST
+        --DBUSER
+        --DBPASS
+        --DBTYPE
+
+    -C --cat <#cols>    behaves like cat, except that it parses input and requires 
+                        there to be <#cols>. filters and modifiers may be defined which
+                        refer to "input" as a relation and c1 ... cN as column names.
+
+        --input-delimiter <char>           sets default input delimiter 
+        -d --delimiter <char>           sets default delimiter 
+        --output-delimiter <char>           sets default output delimiter 
+        --mapkey-delimiter <char>           sets mapfile delimiter 
+
+    -F --filter  "cplusql text" 
+    -M --map <mapfile> <keycols> "cplusql text of value, may be cN of mapfile"
+    -U --user-column <name> "cplusql text"
+    -L --map-file-column <name> <mapfile> <mapfile-key> <mapfile-value> <input-key> 
+    -O --output-column-list <name> [ , <name> [ ... ]]
+    -G --groupby <columnlist>
+    -q to shut upthe sync messages  (use VERBOSE_SYNC=0)
+    -v to set APPLOG_MINLOG=0
+
+all incompatible with:
+    -f <cplusql file>
+    -y 
+    -l
+
+bug: *_ON_PANIC breaks intentional use of exceptions, such as in mergejoin creation
+setup for distribution:
+    - finalize directory structure
+    - doxygenize
+    - configure ; make ; make install
+
+design review points:
+    - current class structure
+    - proposed plugin architecture
+    - proposed build platforms
+
+important, 1.1, but not 1.0:
+    - gzip
+    - db
+    - sort  (execpipe?)
+    - execpipe 
+    - self reference
+
+2.x:
+    - sets
+    - numeric constants
+
+FEATURES:
+
+Expressions:
+
+    is_float( exp )
+    is_integer( exp )
+
+x   integer expression ceil( exp )
+x   integer expression floor( exp )
+    integer expression round( exp )
+    boolean plusp()
+    boolean minusp()
+
+    complex(number,number)
+
+    boolean expression isNull( exp );  [ length(s) == 0
+x    untyped expression nvl( exp1, exp2 ); #equiv to if(isNull(exp1))then{exp2}else{exp1} (see coalesce)
+    
+    untyped expression decode( source-exp, special-exp, special-value-exp, default-value ); 
+
+x   boolean expression op1 ~= op2  true if strings are equal.
+x   boolean expression strequal( exp, exp )  true if strings are equal.
+x   boolean expression match( exp, pattern );
+x   string expression strcat( exp1, exp2 )  [ see ~+ ]
+    string expression truncate( exp1, number )
+x   string expression substr( exp1, startpos, length )
+    string expression substitute( exp1, string pattern, string replacement  )
+    string expression replace_str( exp1, string pattern, string replacement, skip count, replace count  )
+    string expression replace_chars( exp1, ( chars or hex codes ), ( replacement chars or hex codes) )
+
+x   lcase( expression )  lowercased version of input
+    ltrim( expression )  eliminate space on left
+    rtrim( expression )  eliminate space on right
+    wtrim( expression )  eliminate left, right white space and squeeze redundant spaces into one
+    normalize( expression )  combination of lcase(),wtrim()
+    strip_punct() (see bytestrip)
+
+    bitwise operators
+x   & and
+x   | or
+    ^ xor         
+    ~ complement
+    >> shift right N bits
+    << shift left N bits
+
+x   abort( "message", message, ... )
+x   warn( "message", message, ... )
+    info( "message", message, ... )
+    dbg( "message", message, ... )
+    rowexception( "message", message, ... )
+
+    date conversion functions
+
+allow optional destination section in stream defs.
+
+
+-s flag creates stdin default with loose parsing and "c1","c2", column names
+and sends to stdout
+
+projection expression nthval( exp, N )
+nthvalue( exp )
+
+other joins         ( 2 day )
+presorted group by  ( 2 day )
+unsorted group by   ( 1 day, milestone mar 9 )
+projection expression set   ( 1 day )
+sync must accept text and print out start and stop, each joint must also.
+better usage
+    --key=value args go into global
+    verbose flag
+    dont require stdin be cplusql
+
+
+non 1.0:
+more hash functions: crc32, md5
+
+rewrite grammar using spirit c++ tool from boost.org.
+
+where clause for all streams, not just from
+user_column clause for all streams, not just from
+execpipe as source or dest or both
+db as source or dest 
+#include other cplusql files.
+set based relational ops
+
+trigonometry expressions
+    sin,cos,tan
+    acos,asin,atan,atan2
+    asinh,atanh,acosh
+    sinh,cosh,tanh
+    hypot
+    sqrt,cbrt
+    signbit
+        constants: pi, pi/2, etc...
+    abs
+
+match oracle 9x statistical expressions, ie: regression, etc...
+#first, last
+lag, lead
+pvm and/or runsw integration to exec remote procs and pipe them data.
+use configs to set delimiters and buffer sizes
+- create distinction between row-only exceptions and other exceptions for which
+  it is not ok to continue. allow Joint to continue calling next for the
+  former, if so configured, up to some other perstream and/or global
+  configurable number of row exceptions.
+
+HYGEINE:
+doxygen
+
+
+BUGS:
+
+- NUMBER-NUMBER is parse error, parse does "5","-6", not "5","-","6"
+- it is possible to specify an expression on a relation that is not an
+    immediate parent of the current relation. this will cause undefined behavior 
+
+
+
+example helper scripts:
+
+example join, appending some data.
+    (inner, outer, single column with default values )
+
+example of sequential key generation using single db.
+
+example of distributed hashed key generation (static distribution of hashes)
+
+data profiling support 
+
+    profile_column.cplusql
+        uses COLUMN_INDEX or chooses 0
+
+
+            ( most of this is possible allready, or better done with sql + graphing tool,
+            but wanted to get these down, maybe write generic cplusql script that does all 
+            this on one column of input. )
+
+        most frequent value                     k
+        count of distinct values                k
+        count of distinct text normalized values                k
+        count of rows                           k
+        count of empty strings (NULL)           k
+
+        decimal?                                needs is_decimal()
+        float?                                  needs is_decimal()
+        string?                                 needs is_decimal()
+            ascii?                              needs is_decimal()
+            utf8?                               needs is_decimal()
+            iso-8859-1 ?                        needs is_decimal()
+
+        avg,min,max,stddev of numeric value
+
+        avg,min,max,stddev of string length
+
+        is value distribution gaussian distribution ? pareto distribution?
+
+        do disparate columns join? how well?    k
+
+    check_join.cplusql
+
+        uses COLUMN_INDEX or chooses 0 for left 
+        uses JOIN_FILE for right values
+        uses JOIN_FILE_COLUMN_INDEX or 0 for right values
+
+        requires that join_file join column fits into memory with index.
+
+        4 columns...
+            left row count and distinct value count that did and did not join
+        next 2 columns
+            most frequent columns that did/didnt match
+
+        leave 4 files with value,count for did/didnt join, left, right
+
+    check if "correlated" (ie: one dimension or two ) call it "co-dimensionality"
+        A card = 100, B card = 1000, 
+            is
+                bigger dimension unique values / A ^ B unique values 
+
+                A ^ B = 1000   B maps 1-1 with A (perfectly correlated = 1000/1000 =    1
+                A ^ B = 10000  B correlated with A, rate of 1000/10000 =                1/10
+                A ^ B = 75000  B correlated with A, rate of 1000/75000 =                1/75
+
+    
+

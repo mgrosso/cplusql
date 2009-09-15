@@ -1,0 +1,37 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      helloworld.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: join.cplusql,v 1.3 2005/02/03 10:12:51 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream p using files ( "join.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+persist pp from p ;
+sync;
+create index ppindex using pp 
+    sort using gid 
+    where ! shell ~= "/sbin/nologin" 
+    ;
+sync;
+
+create stream p using files ( "join.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create stream ppordered using pp index ppindex ;
+
+create stream ppjoined using join of ppordered gid to pp index ppindex ;
+
+create stream ppjoined_outer using outer join of p gid to pp index ppindex ;
+
+create dest from ppjoined filename "join.output.out" ;
+create dest from ppjoined_outer filename "join.output.02.out" ;
+create dest from ppordered filename "join.output.03.out" ;

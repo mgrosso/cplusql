@@ -1,0 +1,32 @@
+
+#!/home/mgrosso/lcvs/bi/cplusql/src/cplusql
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      testconfig.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Mar  2 18:31:10 EST 2003 on circe.looksmart.net
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: testvar.cplusql,v 1.8 2004/09/29 16:15:20 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+#FOO should be set to foo by caller
+#hopefully PASSWD_COLS="uname,pass,uid,gid,fullname,home_dir,shell"
+
+create configuration ${FOO} ( foo="bar" );
+create configuration bar inherit env inherit foo 
+( green="blue", output="$(uname -m)", necho="echo \"a \\\" b \"" );
+
+create stream passwd using files ("testvar.input.txt") delimiter ":"
+    columns ( ${PASSWD_COLS} ) 
+    inherit bar ( night = "bar");
+
+create stream passwd01 using passwd where ! passwd.uid = 500  ;
+
+create dest from passwd01 filename "t${OUTPUT1}${OUTPUT2}.${OUTPUT3}" inherit ${FOO} ;
+

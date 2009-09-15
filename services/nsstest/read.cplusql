@@ -1,0 +1,11 @@
+create namespace localnss ;
+create stream s using files ( "${OUTPUT_FN}.txt" )
+    columns ( a,b,c,d ) ( NAMESPACE="localnss" ) ;
+create dest from s filename "read.output.01.out" ;
+sync;
+create stream ss using files ("read.output.01.out" ) columns ( a,b,c,d );
+create dest from ss filename "read.output.02.out" ( NAMESPACE="localnss" );
+sync;
+create stream sss using files ("read.output.02.out" )
+    columns ( a,b,c,d ) ( NAMESPACE="localnss" );
+create dest from sss filename "read.output.03.out" ;

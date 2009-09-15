@@ -1,0 +1,17 @@
+create namespace localnss ;
+create stream singlecol2k
+    using files ( "clusterio_write.input.txt" ) columns ( col1 );
+create stream singlecol2k_prime using singlecol2k
+usercolumns
+    cola ceil( col1 )
+    , colb col1 * col1
+    , colc col1
+    , cold floor( col1 )
+(IGNORE_SOURCE_COLUMNS=1)
+;
+create dest from singlecol2k_prime template "write_hash_20k_%s.txt"
+     linenumber( singlecol2k_prime)
+    ( 
+        NAMESPACE="localnss", WRITERID="${WRITER_ID}",
+        DEST_HASH_BUCKET_MIN="0", DEST_HASH_BUCKET_MAX="20000"
+    );

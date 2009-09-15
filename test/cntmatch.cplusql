@@ -1,0 +1,35 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hello.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: cntmatch.cplusql,v 1.2 2005/02/03 10:12:51 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "cntmatch.input.txt" ) delimiter "|"
+#columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+    columns ( raw );
+
+create stream passwd01 using passwd 
+    usercolumns
+        norm normalize ( raw,(),())
+    ;
+
+
+create stream passwd02 using passwd01
+    usercolumns
+        cnt cntmatch((" mgrosso ", " bin ", " home "," Matt "), norm )
+# PARSE expression USING PHRASEMATCH quotedlist INTO columnset
+    parse norm using phrasematch
+        ("mgrosso","bin","home","matt") into columns( matchcount, matchedwords )
+    ;
+
+create dest from passwd02 filename "cntmatch.01.out" ;
+

@@ -1,0 +1,25 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hello.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: missing_delim_2thr.cplusql,v 1.1 2003/03/09 21:01:11 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "missing_delim_2thr.input.txt") delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+
+create stream passwd2 using files ( "missing_delim_2thr.input.txt") delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create dest from passwd filename "missing_delim_2thr.dest.out" ;
+create dest from passwd2 filename "missing_delim_2thr.dest2.out" ;
+

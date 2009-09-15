@@ -1,0 +1,21 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      regex.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: regex.cplusql,v 1.1 2004/05/14 02:20:24 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "regex.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+create stream passwd02 using passwd 
+    where strmatch( "^p|^m|dae.on", passwd.uname );
+create dest from passwd02 filename "regex.output.out" ;
+

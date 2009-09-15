@@ -1,0 +1,4 @@
+#create namespace nss ( NSS_URL="corbaname::localhost:9999#NameSpaceService" );
+create namespace nss ;
+namespace nss ping ;
+namespace nss reconfigure ( APPLOG_MINLOG=0 );

@@ -1,0 +1,23 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      helloworld.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: persist.cplusql,v 1.2 2004/09/29 16:44:04 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream p using files ( "persist.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+persist pp from p ;
+sync;
+
+create dest from pp filename "persist.output.out" ;
+

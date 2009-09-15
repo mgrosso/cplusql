@@ -1,0 +1,39 @@
+adm:x:3:4:adm:/var/adm:/sbin/nologin|adm x 3 4 adm var adm sbin nologin|0|0|
+apache:x:48:48:Apache:/var/www:/sbin/nologin|apache x 48 48 apache var www sbin nologin|0|0|
+bin:x:1:1:bin:/bin:/sbin/nologin|bin x 1 1 bin bin sbin nologin|2|3|bin,bin,bin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin|daemon x 2 2 daemon sbin sbin nologin|0|0|
+desktop:x:80:80:desktop:/var/lib/menu/kde:/sbin/nologin|desktop x 80 80 desktop var lib menu kde sbin nologin|0|0|
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin|ftp x 14 50 ftp user var ftp sbin nologin|0|0|
+games:x:12:100:games:/usr/games:/sbin/nologin|games x 12 100 games usr games sbin nologin|0|0|
+gdm:x:42:42:DUMMY:/var/gdm:/sbin/nologin|gdm x 42 42 dummy var gdm sbin nologin|0|0|
+gopher:x:13:30:gopher:/var/gopher:/sbin/nologin|gopher x 13 30 gopher var gopher sbin nologin|0|0|
+halt:x:7:0:halt:/sbin:/sbin/halt|halt x 7 0 halt sbin sbin halt|0|0|
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin|lp x 4 7 lp var spool lpd sbin nologin|0|0|
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin|mail x 8 12 mail var spool mail sbin nologin|0|0|
+mailnull:x:47:47:DUMMY:/var/spool/mqueue:/sbin/nologin|mailnull x 47 47 dummy var spool mqueue sbin nologin|0|0|
+mgrosso:x:500:500:Matthew Grosso:/home/mgrosso:/bin/bash|mgrosso x 500 500 matthew grosso home mgrosso bin bash|3|4|mgrosso,home,mgrosso,bin
+named:x:25:25:Named:/var/named:/sbin/nologin|named x 25 25 named var named sbin nologin|0|0|
+news:x:9:13:news:/etc/news:|news x 9 13 news etc news|0|0|
+nfsnobody:x:65534:65534:Anonymous NFS User:/var/lib/nfs:/sbin/nologin|nfsnobody x 65534 65534 anonymous nfs user var lib nfs sbin nologin|0|0|
+nobody:x:99:99:Nobody:/:/sbin/nologin|nobody x 99 99 nobody sbin nologin|0|0|
+nscd:x:28:28:NSCD Daemon:/:/sbin/nologin|nscd x 28 28 nscd daemon sbin nologin|0|0|
+ntp:x:38:38:DUMMY:/etc/ntp:/sbin/nologin|ntp x 38 38 dummy etc ntp sbin nologin|0|0|
+operator:x:11:0:operator:/root:/sbin/nologin|operator x 11 0 operator root sbin nologin|0|0|
+pcap:x:77:77:x:/var/arpwatch:/sbin/nologin|pcap x 77 77 x var arpwatch sbin nologin|0|0|
+postfix:x:89:89:DUMMY:/var/spool/postfix:/sbin/nologin|postfix x 89 89 dummy var spool postfix sbin nologin|0|0|
+postgres:x:26:26:PostgreSQL Server:/var/lib/pgsql:/bin/bash|postgres x 26 26 postgresql server var lib pgsql bin bash|1|1|bin
+privoxy:x:73:73:DUMMY:/etc/privoxy:|privoxy x 73 73 dummy etc privoxy|0|0|
+pvm:x:24:24:DUMMY:/usr/share/pvm3:/bin/bash|pvm x 24 24 dummy usr share pvm3 bin bash|1|1|bin
+root:x:0:0:root:/root:/bin/bash|root x 0 0 root root bin bash|1|1|bin
+rpc:x:32:32:Portmapper RPC user:/:/sbin/nologin|rpc x 32 32 portmapper rpc user sbin nologin|0|0|
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin|rpcuser x 29 29 rpc service user var lib nfs sbin nologin|0|0|
+rpm:x:37:37:DUMMY:/var/lib/rpm:/bin/bash|rpm x 37 37 dummy var lib rpm bin bash|1|1|bin
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown|shutdown x 6 0 shutdown sbin sbin shutdown|0|0|
+smmsp:x:51:51:DUMMY:/var/spool/mqueue:/sbin/nologin|smmsp x 51 51 dummy var spool mqueue sbin nologin|0|0|
+squid:x:23:23:DUMMY:/var/spool/squid:/dev/null|squid x 23 23 dummy var spool squid dev null|0|0|
+sshd:x:74:74:Privilege-separated SSH:/var/empty/sshd:/sbin/nologin|sshd x 74 74 privilege separated ssh var empty sshd sbin nologin|0|0|
+sync:x:5:0:sync:/sbin:/bin/sync|sync x 5 0 sync sbin bin sync|1|1|bin
+uucp:x:10:14:uucp:/var/spool/uucp:/sbin/nologin|uucp x 10 14 uucp var spool uucp sbin nologin|0|0|
+vcsa:x:69:69:virtual console memory owner:/dev:/sbin/nologin|vcsa x 69 69 virtual console memory owner dev sbin nologin|0|0|
+webalizer:x:67:67:Webalizer:/var/www/html/usage:/sbin/nologin|webalizer x 67 67 webalizer var www html usage sbin nologin|0|0|
+xfs:x:43:43:X Font Server:/etc/X11/fs:/sbin/nologin|xfs x 43 43 x font server etc x11 fs sbin nologin|0|0|

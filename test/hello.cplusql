@@ -1,0 +1,36 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hello.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: hello.cplusql,v 1.1 2003/02/27 08:34:17 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "test_passwd" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create stream passwd2 using files ( "test_passwd" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create dest from passwd filename "etc_passwd" ;
+
+create stream passwdj using mergejoin of 
+    passwd passwd.uname to passwd2 passwd2.uname ;
+
+create dest from passwdj filename "etc_passwdj" ;
+
+
+create stream passwdjf using passwdj 
+    where passwdj.uid < 20- 4+2*2+3%2- 5/(2+3)+1/2- 1/2
+;
+#    where passwdj.uid < 20- 4+2*2
+
+create dest from passwdjf filename "etc_passwdjf" ;
+

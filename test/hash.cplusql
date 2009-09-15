@@ -1,0 +1,25 @@
+
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hash.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Mar  9 16:17:22 EST 2003 on circe.looksmart.net
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: hash.cplusql,v 1.3 2003/06/28 00:19:50 djain Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "hash.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create dest from passwd template "hash.shell-%s.out" passwd.shell ;
+create dest from passwd template "hash.hashuser-%s.out" hash( passwd.uname, 5 );
+
+create dest from passwd template "hash.shell2-%s.out" passwd.shell (DEST_HASH_BUCKET_LIST="_bin_korne:_dev_null:_foo_bar");
+
+create dest from passwd template "hash.hashuser2-%s.out" hash( passwd.uname, 5 ) (DEST_HASH_BUCKET_MAX=20,DEST_HASH_BUCKET_MIN="${MIN}",DEST_HASH_INIT_MAX_BUCKET="false") ;

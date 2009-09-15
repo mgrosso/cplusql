@@ -1,0 +1,27 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      parsed_column.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Mar 16 13:44:04 EST 2003 on circe.looksmart.net
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: regex_columns.cplusql,v 1.1 2004/06/21 19:23:57 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+create stream passwd using files ( "regex_columns.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create stream passwd03 using passwd 
+        parse passwd.shell pattern "(/)(b[^/]+)(/)([^/]+)" 
+            into columns ( bdidmatch, bfullstr, bslash1, btopdir, bslash2, bbinary )
+        parse passwd.shell pattern "(/)([^b/][^/]+)(/)([^/]+)" 
+            into columns ( nbdidmatch, nbfullstr, nbslash1, nbtopdir, nbslash2, nbbinary )
+        ;
+create dest from passwd03 filename "regex_columns.01.out" ;
+
+
+

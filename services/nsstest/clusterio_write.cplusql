@@ -1,0 +1,13 @@
+create namespace localnss ( NSS_URL="${NSS_URL}" );
+create stream singlecol2k
+    using files ( "clusterio_write.input.txt" ) columns ( col1 );
+create stream singlecol2k_prime using singlecol2k
+usercolumns
+    cola ceil( col1 )
+    , colb col1 * col1
+    , colc col1
+    , cold floor( col1 )
+(IGNORE_SOURCE_COLUMNS=1)
+;
+create dest from singlecol2k_prime
+    filename "${OUTPUT_FN}.txt" ( NAMESPACE="localnss", WRITERID="${WRITER_ID}" );

@@ -1,0 +1,39 @@
+adm|x|3|4|adm|/var/adm|/sbin/nologin|adm|NOT ME|NOT ME|adm|1
+apache|x|48|48|Apache|/var/www|/sbin/nologin|apache|NOT ME|NOT ME|apache|1
+bin|x|1|1|bin|/bin|/sbin/nologin|bin|NOT ME|NOT ME|bin|1
+daemon|x|2|2|daemon|/sbin|/sbin/nologin|daemon|NOT ME|NOT ME|daemon|1
+desktop|x|80|80|desktop|/var/lib/menu/kde|/sbin/nologin|desktop|NOT ME|NOT ME|desktop|1
+ftp|x|14|50|FTP User|/var/ftp|/sbin/nologin|ftp|NOT ME|NOT ME|ftp|1
+games|x|12|100|games|/usr/games|/sbin/nologin|games|NOT ME|NOT ME|games|1
+gdm|x|42|42|DUMMY|/var/gdm|/sbin/nologin|gdm|NOT ME|NOT ME|gdm|1
+gopher|x|13|30|gopher|/var/gopher|/sbin/nologin|gopher|NOT ME|NOT ME|gopher|1
+halt|x|7|0|halt|/sbin|/sbin/halt|halt|NOT ME|NOT ME|halt|1
+lp|x|4|7|lp|/var/spool/lpd|/sbin/nologin|lp|NOT ME|NOT ME|lp|1
+mail|x|8|12|mail|/var/spool/mail|/sbin/nologin|mail|NOT ME|NOT ME|mail|1
+mailnull|x|47|47|DUMMY|/var/spool/mqueue|/sbin/nologin|mailnull|NOT ME|NOT ME|mailnull|1
+mgrosso|x|500|500|Matthew Grosso|/home/mgrosso|/bin/bash|mgrosso|found myself|found myself|found myself|1
+named|x|25|25|Named|/var/named|/sbin/nologin|named|NOT ME|NOT ME|named|1
+news|x|9|13|news|/etc/news||news|NOT ME|NOT ME|news|1
+nfsnobody|x|65534|65534|Anonymous NFS User|/var/lib/nfs|/sbin/nologin|nfsnobody|NOT ME|NOT ME|nfsnobody|1
+nobody|x|99|99|Nobody|/|/sbin/nologin|nobody|NOT ME|NOT ME|nobody|1
+nscd|x|28|28|NSCD Daemon|/|/sbin/nologin|nscd|NOT ME|NOT ME|nscd|1
+ntp|x|38|38|DUMMY|/etc/ntp|/sbin/nologin|ntp|NOT ME|NOT ME|ntp|1
+operator|x|11|0|operator|/root|/sbin/nologin|operator|NOT ME|NOT ME|operator|1
+pcap|x|77|77|x|/var/arpwatch|/sbin/nologin|pcap|NOT ME|NOT ME|pcap|1
+postfix|x|89|89|DUMMY|/var/spool/postfix|/sbin/nologin|postfix|NOT ME|NOT ME|postfix|1
+postgres|x|26|26|PostgreSQL Server|/var/lib/pgsql|/bin/bash|postgres|NOT ME|NOT ME|postgres|1
+privoxy|x|73|73|DUMMY|/etc/privoxy||privoxy|NOT ME|NOT ME|privoxy|1
+pvm|x|24|24|DUMMY|/usr/share/pvm3|/bin/bash|pvm|NOT ME|NOT ME|pvm|1
+root|x|0|0|root|/root|/bin/bash|root|NOT ME|NOT ME|root|1
+rpc|x|32|32|Portmapper RPC user|/|/sbin/nologin|rpc|NOT ME|NOT ME|rpc|1
+rpcuser|x|29|29|RPC Service User|/var/lib/nfs|/sbin/nologin|rpcuser|NOT ME|NOT ME|rpcuser|1
+rpm|x|37|37|DUMMY|/var/lib/rpm|/bin/bash|rpm|NOT ME|NOT ME|rpm|1
+shutdown|x|6|0|shutdown|/sbin|/sbin/shutdown|shutdown|NOT ME|NOT ME|shutdown|1
+smmsp|x|51|51|DUMMY|/var/spool/mqueue|/sbin/nologin|smmsp|NOT ME|NOT ME|smmsp|1
+squid|x|23|23|DUMMY|/var/spool/squid|/dev/null|squid|NOT ME|NOT ME|squid|1
+sshd|x|74|74|Privilege-separated SSH|/var/empty/sshd|/sbin/nologin|sshd|NOT ME|NOT ME|sshd|1
+sync|x|5|0|sync|/sbin|/bin/sync|sync|NOT ME|NOT ME|sync|1
+uucp|x|10|14|uucp|/var/spool/uucp|/sbin/nologin|uucp|NOT ME|NOT ME|uucp|1
+vcsa|x|69|69|virtual console memory owner|/dev|/sbin/nologin|vcsa|NOT ME|NOT ME|vcsa|1
+webalizer|x|67|67|Webalizer|/var/www/html/usage|/sbin/nologin|webalizer|NOT ME|NOT ME|webalizer|1
+xfs|x|43|43|X Font Server|/etc/X11/fs|/sbin/nologin|xfs|NOT ME|NOT ME|xfs|1

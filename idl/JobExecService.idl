@@ -1,0 +1,32 @@
+/* -*- C++ -*- */
+// JobExecService.idl
+
+#if !defined (_JOBEXECSERVICE_IDL)
+#define _JOBEXECSERVICE_IDL
+
+#include "JobQueueService.idl"
+
+#pragma prefix "cplusql.org"
+
+module JobExec
+{
+    interface JobExecService : Service::GenericService
+    {
+        boolean runJob(in JobQueue::JobQueueRef jobQueueRef, in JobQueue::JobSubmissionStruct jobSubmission)
+            raises (Service::ServiceException, Service::PendingShutdownException);
+        // This operation returns true if the node accepted the job and 
+        // will attempt to run it
+        // If there are no available slots, this returns false
+
+        // removes output dirs, .out and .err files for all completed jobs since start of run.
+        void cleanupStaleOutput()
+            raises (Service::ServiceException );
+
+        // kills All Running jobs. usually followed by cleanupStaleOutput().
+        void killAllRunning()
+            raises (Service::ServiceException );
+    };
+};
+
+#pragma prefix ""
+#endif // _JOBEXECSERVICE_IDL

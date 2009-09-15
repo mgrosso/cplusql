@@ -1,0 +1,45 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      split_join.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Mar 16 13:44:04 EST 2003 on circe.looksmart.net
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: split_join.cplusql,v 1.2 2003/04/22 00:07:18 djain Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream parsed_stream using files ( "split_join.input.txt" ) delimiter "|"
+    columns ( placement_key, placement_code, state, obsolete_flag, last_day_key, stream_id, stream_name, first_day_key, metadata_complete_flag );
+
+create stream parsed_stream01 using parsed_stream
+	usercolumn
+		joined_col join ( ( parsed_stream.stream_id, parsed_stream.stream_name, parsed_stream.first_day_key ), "-" )
+	(IGNORE_SOURCE_COLUMNS=1)
+	;
+create dest from parsed_stream01 filename "split_join.01.out" ;
+
+create stream parsed_stream02 using parsed_stream01
+    usercolumn
+		mini_placement_key       crc48 ( parsed_stream01.joined_col )
+	;
+
+create dest from parsed_stream02 filename "split_join.02.out" ;
+
+create stream parsed_stream03 using parsed_stream02
+    usercolumn
+		mini_pk				      parsed_stream02.mini_placement_key,
+		mini_placement_code       parsed_stream02.joined_col
+	(IGNORE_SOURCE_COLUMNS=1)
+	;
+create dest from parsed_stream03 filename "split_join.03.out" ;
+
+create stream parsed_stream04 using parsed_stream03
+    parse parsed_stream03.mini_placement_code delimiter "-"
+        into columns ( aadf, bfasdf )
+    ;
+create dest from parsed_stream04 filename "split_join.04.out" ;

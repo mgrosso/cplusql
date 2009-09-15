@@ -1,0 +1,94 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hello.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: expression.cplusql,v 1.4 2003/06/28 03:00:23 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "expression.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+#about half the rows will match this
+create stream passwd01 using passwd 
+    where passwd.uid < 20 ;
+create dest from passwd01 filename "expression.01.out" ;
+
+#should be identical to 01
+create stream passwd02 using passwd 
+    where passwd.uid < 20- 4+2*2+3%2- 5/(2+3)+1/2- 1/2 ;
+create dest from passwd02 filename "expression.02.out" ;
+
+#should include every row
+create stream passwd03 using passwd where 
+    (1*0 || 1*1 )&&
+    1 && 1 and (1) 
+    or 1=2 
+    || ("1")=("2")
+    or ("1"="2") ;
+create dest from passwd03 filename "expression.03.out" ;
+
+#should include only one row
+create stream passwd04 using passwd where 
+    (1*0 || 1*1 )&&
+    1 * 1 &&
+    passwd.uid = passwd.gid
+    and
+    passwd.uid = "500" ;
+create dest from passwd04 filename "expression.04.out" ;
+
+#should include no rows
+create stream passwd05 using passwd where 
+    (1*0 || 1*1 )&&
+    "1"="2" 
+    || ("1")=("2")
+    || (("1")=("2"))
+    || ("1"="2") 
+    || ! ( passwd.uid = passwd.uid )
+    or ! "1"
+    or if( ! "0" ) then { "0" } else { "1" } 
+    or if( "0" = "1" ) then { "1" } else { "0" } 
+    or 
+        if( "1" ) then { 
+            if( "0" ) then { 
+                "1" 
+            } else { 
+                "0"
+            } 
+        } else { 
+            "1" 
+        } 
+    ;
+    create dest from passwd05 filename "expression.05.out" ;
+
+#should include all rows
+create stream passwd06 using passwd where 
+    (1*0 || 1*1 )&&
+    1 * 1 &&
+    "1"="2" 
+    || ("1")=("2")
+    || (("1")=("2"))
+    || ("1"="2") 
+    || ! ( passwd.uid = passwd.uid )
+    or ! "1"
+    or if( ! "0" ) then { "0" } else { "1" } 
+    or if( "1" ) then { 
+            if( "0" ) then { 
+                "1" 
+            } else { 
+                "0"
+            } 
+        } else { 
+            "1" 
+        } 
+    or "1"
+    ;
+    create dest from passwd06 filename "expression.06.out" ;
+

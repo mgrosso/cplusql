@@ -1,0 +1,25 @@
+create dbconnection lkdw ( "${DBUSER}", "${DBPASS}", "${DBURL}" )
+;
+
+create stream day_dim using dbconnection lkdw
+query "select day_key, calendar_year from day_dim where day_key like '1%' order by day_key"
+columns (day_key, calendar_year)
+;
+
+create map day_dim_m using day_dim from day_key to calendar_year
+;
+
+sync;
+
+create stream day_dim using dbconnection lkdw
+query "select day_key, day_of_week, day_name, year, calendar_month_name, calendar_year from day_dim order by day_key"
+columns (day_key, day_of_week, day_name, year, calendar_month_name, calendar_year)
+;
+
+create stream day_dim2 using day_dim
+usercolumns
+	lookup_year map_value(day_dim_m, day_key, "not-available")
+;
+
+create dest from day_dim2 filename "dbconnection.output.out"
+;

@@ -1,0 +1,39 @@
+adm:x:3:4:adm:_var_adm:_sbin_nologin
+apache:x:48:48:Apache:_var_www:_sbin_nologin
+bin:x:1:1:bin:_bin:_sbin_nologin
+daemon:x:2:2:daemon:_sbin:_sbin_nologin
+desktop:x:80:80:desktop:_var_lib_menu_kde:_sbin_nologin
+ftp:x:14:50:FTP User:_var_ftp:_sbin_nologin
+games:x:12:100:games:_usr_games:_sbin_nologin
+gdm:x:42:42:DUMMY:_var_gdm:_sbin_nologin
+gopher:x:13:30:gopher:_var_gopher:_sbin_nologin
+halt:x:7:0:halt:_sbin:_sbin_halt
+lp:x:4:7:lp:_var_spool_lpd:_sbin_nologin
+mail:x:8:12:mail:_var_spool_mail:_sbin_nologin
+mailnull:x:47:47:DUMMY:_var_spool_mqueue:_sbin_nologin
+mgrosso:x:500:500:Matthew Grosso:_home_mgrosso:_bin_bash
+named:x:25:25:Named:_var_named:_sbin_nologin
+news:x:9:13:news:_etc_news:
+nfsnobody:x:65534:65534:Anonymous NFS User:_var_lib_nfs:_sbin_nologin
+nobody:x:99:99:Nobody:_:_sbin_nologin
+nscd:x:28:28:NSCD Daemon:_:_sbin_nologin
+ntp:x:38:38:DUMMY:_etc_ntp:_sbin_nologin
+operator:x:11:0:operator:_root:_sbin_nologin
+pcap:x:77:77:x:_var_arpwatch:_sbin_nologin
+postfix:x:89:89:DUMMY:_var_spool_postfix:_sbin_nologin
+postgres:x:26:26:PostgreSQL Server:_var_lib_pgsql:_bin_bash
+privoxy:x:73:73:DUMMY:_etc_privoxy:
+pvm:x:24:24:DUMMY:_usr_share_pvm3:_bin_bash
+root:x:0:0:root:_root:_bin_bash
+rpc:x:32:32:Portmapper RPC user:_:_sbin_nologin
+rpcuser:x:29:29:RPC Service User:_var_lib_nfs:_sbin_nologin
+rpm:x:37:37:DUMMY:_var_lib_rpm:_bin_bash
+shutdown:x:6:0:shutdown:_sbin:_sbin_shutdown
+smmsp:x:51:51:DUMMY:_var_spool_mqueue:_sbin_nologin
+squid:x:23:23:DUMMY:_var_spool_squid:_dev_null
+sshd:x:74:74:Privilege-separated SSH:_var_empty_sshd:_sbin_nologin
+sync:x:5:0:sync:_sbin:_bin_sync
+uucp:x:10:14:uucp:_var_spool_uucp:_sbin_nologin
+vcsa:x:69:69:virtual console memory owner:_dev:_sbin_nologin
+webalizer:x:67:67:Webalizer:_var_www_html_usage:_sbin_nologin
+xfs:x:43:43:X Font Server:_etc_X11_fs:_sbin_nologin

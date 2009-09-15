@@ -1,0 +1,6 @@
+desktop|x|80|80|desktop|_var_lib_menu_kde|_sbin_nologin
+gdm|x|42|42|DUMMY|_var_gdm|_sbin_nologin
+lp|x|4|7|lp|_var_spool_lpd|_sbin_nologin
+named|x|25|25|Named|_var_named|_sbin_nologin
+nobody|x|99|99|Nobody|_|_sbin_nologin
+squid|x|23|23|DUMMY|_var_spool_squid|_dev_null

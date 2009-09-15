@@ -1,0 +1,11 @@
+halt|x|7|0|halt|/sbin|/sbin/halt
+root|x|0|0|root|/root|/bin/bash
+shutdown|x|6|0|shutdown|/sbin|/sbin/shutdown
+sync|x|5|0|sync|/sbin|/bin/sync
+news|x|9|13|news|/etc/news|
+squid|x|23|23|DUMMY|/var/spool/squid|/dev/null
+pvm|x|24|24|DUMMY|/usr/share/pvm3|/bin/bash
+postgres|x|26|26|PostgreSQL Server|/var/lib/pgsql|/bin/bash
+rpm|x|37|37|DUMMY|/var/lib/rpm|/bin/bash
+mgrosso|x|500|500|Matthew Grosso|/home/mgrosso|/bin/bash
+privoxy|x|73|73|DUMMY|/etc/privoxy|

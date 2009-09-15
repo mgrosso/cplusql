@@ -1,0 +1,14 @@
+#
+# new entries should go at the top, just below this comment and be of the format
+#
+# <date>
+# \tcomment
+#
+# where <date> is the output of the date command (type ESC ! ! date )
+# and \t is 4 spaces, not the \t ascii character. 
+#
+
+Mon Dec 15 00:29:54 EST 2003
+	Created ChangeLog. Report important changes here,
+	report small changes to CVS only.
+

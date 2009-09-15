@@ -1,0 +1,138 @@
+/* -*- C++ -*- */
+// JobQueue.idl
+
+#if !defined (_JOBQUEUESERVICE_IDL)
+#define _JOBQUEUESERVICE_IDL
+
+#include "service.idl"
+
+#pragma prefix "cplusql.org"
+
+module JobQueue
+{
+    typedef Service::ServiceRef JobQueueRef;
+    typedef Service::ServiceRef JobExecRef;
+    typedef sequence<JobExecRef> JobExecRefList; 
+    struct EnvPair
+    {
+        string name;
+        string value;
+    };
+
+    typedef sequence<EnvPair> EnvPairList;
+
+    typedef long num_threads_t ;
+    typedef string job_id_t ;
+    typedef sequence<job_id_t> JobIdList;
+
+    typedef string executable_t;
+
+    struct exec_args
+    {
+        //the arguments get passed to execvp()
+        //the environment variables get set prior to execvp() 
+        string command;
+        EnvPairList environment;
+        Service::NVPairList configuration;
+        boolean exclusive; // this process may not share a JobExec
+    };
+    typedef sequence<exec_args> ExecArgsList;
+
+    struct JobSubmissionStruct
+    {
+        job_id_t        jobId;
+        exec_args       args;
+    };
+    typedef sequence<JobSubmissionStruct> JobSubmissionList;
+
+    enum JobStateId 
+    { 
+        ready, scheduled, submitting, running, succeeded, failed 
+    }; 
+
+    typedef sequence<JobStateId> JobStateIdList;
+
+    struct Job
+    {
+       JobSubmissionStruct  jobSubmission;
+       JobStateId           jobState;
+       JobExecRefList       nodesTried;
+       JobExecRef           currentNode;
+    };
+
+    typedef sequence<Job> JobList;
+
+    enum ExecutionStatusId { running_on_node, succeeded_on_node, failed_on_node };
+
+    struct ExecutionStatusStruct
+    {
+        job_id_t            jobId;
+        ExecutionStatusId   executionStatus ;
+        Service::NVPairList statusDetails;
+        // the statusDetails might include unix exit status, location of
+        // files containing stdout, stderr, etc...
+    };
+
+    interface JobQueueService : Service::GenericService, Service::NodeMonitorPushConsumer
+    {
+      // = TITLE
+      // Defines an interface that encapsulates operations 
+      // for submitting jobs and waiting on status
+      // and shuts down the server.
+
+        JobIdList submit (in ExecArgsList execArgsList )
+            raises (Service::ServiceException, Service::PendingShutdownException);//, BAD_PARAM); // need to check IDL syntax
+                                                // for multiple exceptions
+        // This operation returns the job ids as a sequence of strings
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: subsequent calls to getJobs will show expected results
+
+        JobStateIdList waitForStatusList (in JobIdList jobIds, in Service::time_t timeout)
+            raises (Service::ServiceException, Service::PendingShutdownException);//, BAD_PARAM);
+        // This operation returns when any job completes, returning a 
+        // list of the statuses of all jobs in the list, but may time
+        // out, in which case the statuses will all be JobQueue::running
+        // The client is responsible for recalling if there are still jobs
+        // in the JobQueue::running state (which includes after timeout)
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: when called with a list of jobIds that are being managed by this service, will block until one of them completes, or the timeout period expires
+        // test: when called with a list of jobIds, none of which are being managed by this service, will throw BAD_PARAM
+        // test: when called with an empty list of jobIds, will throw BAD_PARAM
+    
+        JobStateId waitForStatus (in job_id_t jobId, in Service::time_t timeout)
+            raises (Service::ServiceException, Service::PendingShutdownException);//, BAD_PARAM);
+        // analogous to the previous waitForStatus, but for just one job
+
+        void jobFinished(in ExecutionStatusStruct executionStatus)
+            raises (Service::ServiceException, Service::PendingShutdownException);
+        // This operation is called by a servant of JobQueue on which
+        // JobQueue requested a job be run
+        // this function will:
+        //      decrement Job::countOfRunningJobs
+        //      increment Job::availableSlots
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: if called with the job id of a job managed by this service which is in the running state, subsequent observations of JOBLIST on the ServiceStatus for this service will have expected results
+        // test: if called with the job id of a job not managed by this service or which is not in the running state, will throw BAD_PARAM?
+
+        void killAllJobs(in num_threads_t numThreads)
+            raises (Service::ServiceException);
+        // kill all jobs in the runningQueue
+        // needs to delegate that responsibility to the JobExec on
+        // which the job is running, and then update the queues
+        // appropriately
+        // numThreads determines how many concurrent processes may be used to distribute
+        // the killAllRunning commands to the cluster of JobExecServices
+
+        void cleanupStaleOutput(in num_threads_t numThreads)
+            raises (Service::ServiceException);
+        // delegates to all JobExecs so that they will cleanup
+        // subdirs from jobs that are no longer running 
+        // numThreads determines how many concurrent processes may be used to distribute
+        // the cleanupStaleOutput commands to the cluster of JobExecServices
+
+        void            shutdownNow()
+            raises (Service::ServiceException);
+    };
+};
+
+#endif /* _JOBQUEUESERVICE_IDL */

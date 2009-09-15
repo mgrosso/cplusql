@@ -1,0 +1,70 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hello.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: user_column.cplusql,v 1.6 2005/02/03 10:12:51 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "user_column.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+#skips all but the nfs user, just so we have a where clause at the same time.
+create stream passwd01 using passwd 
+    usercolumn
+        m      "myliteral",
+        myliteral2      "embedded # octothorpe",
+        myliteral3      "embedded ' quote",
+        myliteral4      "0",
+        myliteral5      "-1",
+        uid_x_gid       passwd.uid * passwd.gid,
+        uid_x_uid       passwd.uid * passwd.uid,
+        uidp_x_uidp     ( passwd.uid +"1" ) * ( passwd.uid + "1" ),
+        is_mgrosso      if( passwd.uid = "500" ) then { "mgrosso" }else{ "notme" },
+        is_mgrosso2     
+            if( passwd.uid = "500" ) then { 
+                if("0") then {"i'm broken"}else{"still mgrosso" }
+            }else{
+                "notme"
+            }
+        where passwd.uid < "1000" 
+        ;
+create dest from passwd01 filename "user_column.01.out" ;
+
+#same rows as 01, but myfoo appended.
+create stream passwd02 using passwd01
+    usercolumn
+        foo "myfoo", 
+        neg_gid passwd01.gid * passwd01.myliteral5 ;
+create dest from passwd02 filename "user_column.02.out" ;
+
+create stream passwd03 using passwd
+	usercolumn
+		uname uname,
+		(uid)
+(IGNORE_SOURCE_COLUMNS=1)
+;
+create dest from passwd03 filename "user_column.03.out" ;
+
+create stream passwd04 using passwd
+	usercolumn
+		(uid),
+		uname uname
+(IGNORE_SOURCE_COLUMNS=1 )
+;
+create dest from passwd04 filename "user_column.04.out" (WRITE_HEADER="user_column.04.meta" );
+
+create stream passwd05 using passwd01
+	usercolumn
+		a is_mgrosso,
+		seq1 sequence( "1", "1", is_mgrosso )
+(IGNORE_SOURCE_COLUMNS=1 )
+;
+create dest from passwd05 filename "user_column.05.out" ;

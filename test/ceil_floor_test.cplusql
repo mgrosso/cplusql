@@ -1,0 +1,9 @@
+create stream straight_through
+    using files ( "-" ) columns ( alabala );
+create stream a_stream  using straight_through
+usercolumns
+    cola ceil( alabala ), cold floor( alabala )
+(IGNORE_SOURCE_COLUMNS=1)
+;
+create dest from a_stream 
+    filename "-";

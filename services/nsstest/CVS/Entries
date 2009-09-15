@@ -1,0 +1,27 @@
+/clusterio_write.cplusql/1.1/Fri Jun 18 20:18:13 2004//
+/clusterio_write.input.txt/1.1/Fri Jun 18 20:18:13 2004//
+/clusterio_write.sh/1.1/Fri Jun 18 20:18:13 2004//
+/clusterio_write.ut1.err/1.1/Fri Jun 18 20:18:13 2004//
+/clusterio_write.ut2.err/1.1/Fri Jun 18 20:18:13 2004//
+/clusterio_write_hash.cplusql/1.1/Fri Jun 18 20:18:13 2004//
+/mv_dne_foo.cplusql/1.1/Tue Jun  8 20:11:39 2004//
+/mv_foo_exists.cplusql/1.1/Tue Jun  8 20:11:40 2004//
+/ping_reconfigure.cplusql/1.1/Tue Jun  8 20:11:40 2004//
+/read.cplusql/1.2/Wed Jun 23 15:41:00 2004//
+/read.output.01.eng/1.1/Wed Jun 23 15:41:00 2004//
+/read.output.03.eng/1.1/Wed Jun 23 15:41:00 2004//
+/read_glob.cplusql/1.1/Wed Jun 30 16:33:19 2004//
+/read_glob.output.01.eng/1.1/Wed Jun 30 16:33:19 2004//
+/read_glob.output.02.eng/1.1/Wed Jun 30 16:33:19 2004//
+/rm_dne.cplusql/1.1/Tue Jun  8 20:11:40 2004//
+/svc.conf/1.1/Tue Jun  8 20:11:41 2004//
+/test-clean.sh/1.2/Wed Jun 23 15:41:00 2004//
+/test-env/1.2/Mon Jun 21 06:22:45 2004//
+/test-nss.sh/1.8/Tue Jul 13 23:02:44 2004//
+/test-start-nss.sh/1.3/Wed Jun 23 15:41:00 2004//
+/touch_mv_rm.cplusql/1.1/Tue Jun  8 20:11:43 2004//
+/write.cplusql/1.1/Mon Jun 21 19:32:34 2004//
+/write_hash.cplusql/1.2/Wed Jun 30 12:24:33 2004//
+/write_hash_100_empties.cplusql/1.1/Fri Jun 25 09:32:53 2004//
+/write_hash_20k_empties.cplusql/1.1/Fri Jun 25 09:32:53 2004//
+D

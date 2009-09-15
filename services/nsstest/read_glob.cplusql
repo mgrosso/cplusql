@@ -1,0 +1,7 @@
+create namespace localnss ;
+create stream s using files ( "write_hash_" ) columns ( a,b,c,d ) 
+    ( NAMESPACE="localnss", PATTERN="write_hash_[0-9]+\.txt" ) ;
+create dest from s filename "read_glob.output.01.out" ;
+
+create stream t using files ( "write_hash.output.txt" ) columns ( a,b,c,d ) ;
+create dest from t filename "read_glob.output.02.out" ;

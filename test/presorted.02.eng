@@ -1,0 +1,7 @@
+|82|9|73|9|73|2|2|2|73|9|news|privoxy
+/bin/bash|587|0|500|500|37|5|5|5|0|500|mgrosso|rpm
+/bin/sync|5|5|5|5|5|1|1|1|5|5|sync|sync
+/dev/null|23|23|23|23|23|1|1|1|23|23|squid|squid
+/sbin/halt|7|7|7|7|7|1|1|1|7|7|halt|halt
+/sbin/nologin|66550|1|65534|3|43|28|28|28|1|99|adm|xfs
+/sbin/shutdown|6|6|6|6|6|1|1|1|6|6|shutdown|shutdown

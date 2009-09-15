@@ -1,0 +1,519 @@
+/* -*- C++ -*- */
+// clusterio.idl
+
+#if !defined (CLUSTERIO_IDL)
+#define CLUSTERIO_IDL
+
+#include "service.idl"
+
+#pragma prefix "cplusql.org"
+
+#ifndef CLUSTERIO_BLOCK_SIZE
+#define CLUSTERIO_BLOCK_SIZE 65536
+#endif  //CLUSTERIO_BLOCK_SIZE
+
+#ifndef CLUSTERIO_CHECKSUM_SIZE
+#define CLUSTERIO_CHECKSUM_SIZE 4
+#endif  //CLUSTERIO_CHECKSUM_SIZE 
+
+#ifndef CLUSTERIO_MAJOR_VERSION
+#define CLUSTERIO_MAJOR_VERSION 0
+#endif //CLUSTERIO_MAJOR_VERSION
+
+#ifndef CLUSTERIO_MINOR_VERSION
+#define CLUSTERIO_MINOR_VERSION 0
+#endif //CLUSTERIO_MINOR_VERSION
+
+#ifndef CLUSTERIO_TINY_VERSION
+#define CLUSTERIO_TINY_VERSION 0
+#endif //CLUSTERIO_TINY_VERSION
+
+#ifndef CLUSTERIO_RELEASE_TAG
+#define CLUSTERIO_RELEASE_TAG "no release tag";
+#endif //CLUSTERIO_RELEASE_TAG
+
+//-------------------------------------------------------------
+// in a nutshell:
+// 
+// clients use factory to get a namespace manager.
+// clients use a namespace manager to manage filenames, opening 
+// and deleting and moving and linking them. The namespace manager
+// is the single point of consistency for file metadata and so it
+// is also responsible for replicating and checkpointing its state
+// to persistent storage. 
+//
+// depdending on the level of redundancy requested, one or many file
+// handles are then used with a corresponding set of ReadWriteService's to do
+// actual reading and writing.
+// 
+// deletes immediately remove files from the namespace, but the 
+// storage recovery is as lazy as practical, so that undeletes have
+// a decent chance of suceeding.
+//
+// the namespace server also maintains a set of keyvalue pairs 
+// corresponding to each file. These can be used to find files.
+//-------------------------------------------------------------
+
+module clusterio 
+{
+    //-------------------------------------------------------------
+    // typedefs
+    //-------------------------------------------------------------
+    typedef unsigned long long  length_t ;//files can be > 2Gb
+    typedef unsigned long       unix_time_t ;
+    typedef string              hostname_t ;
+    typedef unsigned long       flag_t ;
+    typedef string              filename_t ;//later, may be wstring
+
+    typedef sequence< filename_t >   filename_seq ;
+
+    //-------------------------------------------------------------
+    // the following flags have meanings similar to unix open(), and
+    // can be bitwise logical OR'ed together in the flags arg to open()
+    //-------------------------------------------------------------
+
+    //for now, you must set exactly one of o_rdonly or o_wronly
+    const flag_t    o_rdonly     =  1;
+    const flag_t    o_wronly     =  2;
+
+    //not supported for now.
+    //const flag_t    o_rdwr       =  3; 
+
+    const flag_t    o_creat      =  4;
+    const flag_t    o_excl       =  8;
+
+    //bit 16's bit implies append if 0, trunc if 1.
+    //trunc not supported for now.
+    const flag_t    o_append     =  0; //default for now.
+    //const flag_t    o_trunc      =  16; 
+
+    //by default writes will wait and confirm fflush(fd) to disk.
+    //if o_ndelay, then return without confirming write 
+    // o_nonblock is a synonym for o_ndelay
+    const flag_t    o_sync       =  0 ;  
+    //const flag_t    o_ndelay     =  32;  
+    //const flag_t    o_nonblock   =  32;  
+
+	const short writer_id_len = 8;
+	const short clusterio_checksum_size = CLUSTERIO_CHECKSUM_SIZE;
+
+    //-------------------------------------------------------------
+    // file data is transferred in both directions in sequences of 
+    // fixed sized blocks, which should (may?) make the marshalling and 
+    // demarshalling code more efficient. BLOCK_SIZE should be large
+    // enough that the checksum size is not significant, but small 
+    // enough that wasted network bandwidth is insignificant.
+    //-------------------------------------------------------------
+    enum e_checksum_type { none, crc48 }; //TODO : md5, sha1 
+
+    typedef sequence < unsigned long long, clusterio_checksum_size >   checksum_t ;
+    typedef sequence < octet, writer_id_len >            writer_id ;
+    typedef sequence < octet >               file_data_t ;
+
+    //to prevent duplicate writes, without preventing multiple writes of
+    //identical data....
+    struct block {
+        e_checksum_type         check_type ;
+        checksum_t              checksums ;
+        file_data_t             data ;
+    };
+
+    typedef sequence < block > blockseq ;
+
+
+    //-------------------------------------------------------------
+    // struct file_name_status is the information that the IONameSpace
+    // maintains about filenames.
+    //-------------------------------------------------------------
+    struct file_name_status {
+        filename_t              filename;
+        unix_time_t             time_name_created;
+        unix_time_t             last_time_name_changed;
+        Service::ServiceRefList servants;
+    };
+    typedef sequence< file_name_status > FileNameStatusList;
+
+    //-------------------------------------------------------------
+    // struct file_handle is abstraction that clients get once they
+    // have opened a filename.
+    //
+    // The contents of this struct should not be examined by clients.
+    // it is part of the interaction between the namespace and ReadWriteService
+    // and it is likely to change with the implementation.
+    //
+    //-------------------------------------------------------------
+    typedef length_t        private_file_id;
+    struct file_handle {
+        private_file_id     id;
+		string              debug_info;
+        flag_t              flags;
+        length_t            append_token;
+    };
+    typedef sequence< file_handle > file_handle_seq;
+
+    //-------------------------------------------------------------
+    // struct file_handle_status provides information about the data
+    // corresponding to a handle.
+    //-------------------------------------------------------------
+    enum e_fh_status { not_found, released, normal };
+    struct data_range {
+        length_t      offset ;
+        length_t      length ;
+        checksum_t    checksum ;
+        writer_id     writer ;
+        unsigned long writers_sequence   ;
+        unix_time_t   seconds ;
+        unix_time_t   useconds ;
+    };
+    typedef sequence< data_range > data_range_seq;
+
+    struct file_handle_status {
+        private_file_id         id;
+        e_fh_status             status ;
+        e_checksum_type         check_type ;
+        data_range_seq          data_ranges ;
+    };
+    typedef sequence< file_handle_status > file_handle_status_seq;
+
+    //-------------------------------------------------------------
+    //open info provides clients with information about where and 
+    //how they can read and write data corresponding to a filename.
+    //
+    // is_preferred_host is whether or not the local methods like
+    // 
+    //-------------------------------------------------------------
+
+    struct open_info {
+        file_handle         handle ; 
+        Service::ServiceRefList      servants  ;
+    };
+    typedef sequence< open_info > open_info_seq ;
+
+    enum clusterIOErrorType
+    {
+        serviceNotFound,
+        fileNotFound,
+        fileNotOpened,
+        invalidParameter, //invalid open mode, writer, sequence, etc
+        readError, // expect errno to provide more specifics
+        writeError, // expect errno to provide more specifics
+        diskFull,  // or is this just a writeError
+        eof,  // or is this just a readError
+		staleFile, // 
+		unknown
+    };
+
+    enum clusterIOErrorAction
+    {
+        fail,  // client must fail.
+        retry, // client should retry 
+        success //client should suceed
+    };
+
+    struct io_exception_struct
+    {
+        Service::ServiceRef serviceRef;
+        clusterIOErrorType type;
+        short  errno_short ;
+        string what_string ; 
+    };
+
+    typedef sequence< io_exception_struct> IOExceptionStructList ;
+    exception ClusterIOException
+    {
+        IOExceptionStructList exceptions;
+    };
+
+    interface NameSpaceService :
+        Service::NodeMonitorPushConsumer, Service::GenericService
+    {
+        //functions to be used by clusterio clients
+
+        // stat()
+        //
+        // returns false if file does not exist. 
+        // 
+        // if return_status is true, then file_name_status 
+        // is populated.
+        // 
+        // will only throw for internal errors.
+        boolean stat( 
+            in filename_t filename,
+            out file_name_status status 
+        )
+        raises( Service::ServiceException );
+
+        // find()
+        //
+        // returns statuses of files whose name begins with "prefix".
+        //
+        FileNameStatusList 
+        find(
+            in filename_t               prefix,
+            in filename_t               pattern
+        )
+        raises( Service::ServiceException );
+
+        // open()
+        //
+        // filename is the path of the file you would like to open. there
+        // is no need to worry about whether or not the directory exists,
+        // as there is no concept of a directory and traditional directory
+        // seperator characters have no special meaning here.
+        //
+        // the open_info_seq will have "copies" members, unless that many
+        // are not available, in which case an exception will be thrown.
+        // generally each ReadWriteService will be hosted on a separate
+        // host, except perhaps in development
+        //
+        // if preferred_host is not empty, then server will attempt to
+        // ensure that the first ReadWriteService is hosted on that host.
+        //
+        // may throws if the option flags are inconsistent with filename
+        // state.  for instance, if O_EXCL is specified and the file
+        // allready exists.
+        //
+        // may also throw for internal errors.
+        //
+        open_info
+        open(
+            in filename_t   filename, 
+            in short        copies,  
+            in flag_t       flags,  
+            in hostname_t   preferred_host
+        )
+        raises( Service::ServiceException );
+
+        open_info_seq
+        open_seq(
+            in filename_seq             filenames,
+            in short                    copies,
+            in flag_t                   flags,
+            in hostname_t               preferred_host
+        )
+        raises( Service::ServiceException );
+
+        open_info_seq
+        find_open_seq(
+            in filename_t               prefix,
+            in filename_t               pattern,
+            in short                    copies,
+            in flag_t                   flags,
+            in hostname_t               preferred_host
+        )
+        raises( Service::ServiceException );
+
+        // mv()
+        //
+        // after the call, filename "from" will no longer be visible, and 
+        // filename "to" will inherit all its metadata, and point to the same 
+        // underlying  data as "from" did. it is an error if "to" 
+        //
+        void
+        mv( in filename_t   from, in filename_t   to) 
+        raises( Service::ServiceException );
+
+        // mvclobber()
+        //
+        // same as mv(), but this method will atomically delete "to" if it
+        // allready exists.
+        //
+        void mvclobber( in filename_t   from, in filename_t   to) 
+        raises( Service::ServiceException );
+
+        // ln()
+        //
+        // after the call, filename "from" and filename "to" will both point to
+        // the same metadata and file data.  changes to one will be instantly 
+        // reflected in the other. it is, as yet, undefined whether deletion of 
+        // one filename makes the other go away.
+        //
+        // what happens if "to" allready exists?
+        //
+        // not going to do this in initial implementation, unless necessary
+        //
+        //void
+        //ln( in filename_t   from, in filename_t   to) 
+        //raises( Service::ServiceException );
+
+        // rm()
+        //
+        // after the call, filename "file" will no longer be visible, except to 
+        // unrm calls.  storage is not freed immediately, but the corresponding 
+        // ReadWriteService's will be eventually be notified that may reuse any associated space.
+        //
+        // the find_rm() version returns the number of affected files.
+        //
+        void 
+        rm( in filename_t   file ) 
+        raises( Service::ServiceException );
+
+        length_t 
+        find_rm(
+            in filename_t               prefix,
+            in filename_t               pattern
+        )raises( Service::ServiceException );
+
+        // failure()
+        //
+        // service will evaluate exceptions, and possibly take corrective action.
+        //
+        // service may tell the client that it is ok to retry or that the operation can 
+        // now safely be regarded as sucessfull.
+        //
+        // in any case, the service may need to change the contents of "where" in order
+        // to failover from one client to another, so client should only use the new changed
+        // open_info for the file in question after this call.
+        //
+        clusterIOErrorAction
+        failure( inout open_info fileinfo, in IOExceptionStructList exceptions );
+    };
+
+    interface ReadWriteService : Service::GenericService
+    {
+        //functions to be used by clusterio clients
+
+        // append()
+        //
+        // writes every block in blocks to the file represented by fd.
+        //
+        // O_APPEND and O_WRONLY must be set in the open() flags for this fd.
+        // or else it throws.
+        //
+        void 
+        append( in open_info fd, in blockseq blocks, 
+            in writer_id writer, in unsigned long sequence_num )
+        raises( ClusterIOException, Service::ServiceException );
+
+        // undo_appends()
+        // 
+        // causes all blocks previously written by writer_id to become
+        // invisible to future reads.  Any additional writes from this writer
+        // MUST start with the value placed into next_sequence_num, otherwise
+        // they MAY be invisible to future readers.
+		// Return value is approximate number of bytes that were undone.
+        //
+        length_t 
+        undo_appends( in open_info fd, in writer_id writer, out unsigned long next_sequence_num )
+            raises( ClusterIOException, Service::ServiceException );
+
+        // read()
+        //
+        // reads at most size bytes from fd, starting from first_byte, and puts results in blocks.
+        //
+        // hint, if first_byte and size are multiples of block_size, this will be much
+        // faster and kinder to the server.
+        //
+        // does not modify fd. 
+        // fd must have been opened with either O_RDWR or O_RDONLY
+        // also throws for os errors or if fd is not valid (b/c it got cleaned up), 
+        // and so on.
+        //
+        // returns the actual number of bytes read
+        //
+        length_t
+        read( 
+            in open_info fd,
+            in length_t first_byte, 
+            in length_t size,
+            out file_data_t data
+        )
+        raises( ClusterIOException, Service::ServiceException );
+
+        // stat()
+        // 
+        // provides information about the files in fdset. 
+        // 
+        // only throws for internal errors. if file is not found, status enum is 
+        // set appropriately in file_handle_status struct.
+        // 
+        file_handle_status_seq 
+        stat( in file_handle_seq fdset, in boolean checksums ) 
+            raises( ClusterIOException, Service::ServiceException );
+
+        //-------------------------------------------------------------
+        //functions to be used by namespace server, but not by clients
+        //-------------------------------------------------------------
+
+        // cp()
+        // 
+        // instructs this node to populate fd with the contents of sources sourcefd.
+        // any preexisting data in fd will be wiped. This call will not complete until
+        // the file has been replicated.
+        // 
+        void
+        namespace_cp(
+            in file_handle fd, 
+            in Service::ServiceRef source, 
+            in file_handle sourcefd)
+            raises( ClusterIOException, Service::ServiceException );
+
+		// This is an internal system call to be used by one ReadWriteSerice to another.
+		// It is an implementation detail of namespace_cp (that is unfortunately published
+		// in a public idl) so this may change for system or performance reasons.
+		//
+		void
+		system_cp(
+			in file_handle fd,
+			in string destHost,
+			in long destFilePort,
+			in long destAuditPort)
+			raises (Service::ServiceException);
+
+		void
+		namespace_token(
+			in file_handle fd,
+			in long append_token)
+			raises (Service::ServiceException);
+
+        // namespace_releases()
+        // 
+        // allows the ReadWriteService to reuse the disk space consumed by fd. 
+        // 
+        void 
+        namespace_rm( in file_handle fd ) 
+        raises( ClusterIOException, Service::ServiceException );
+
+        // namespace_unrm()
+        // 
+        // tells the ReadWriteService not to reuse the disk space consumed by fd,
+        // if still possible. 
+        //
+        // returns true if successful, false if fd could not be found
+        //    ( presumably b/c it was cleaned up allready. )
+        //
+        // TODO
+        // 
+        //boolean 
+        //namespace_unrm( in file_handle fd ) 
+        //raises( Service::ServiceException );
+
+    	enum dump_format { html, flat, normal };
+		enum detail_level { minimal, regular, expanded, full };
+		// 
+		//
+		void
+		dumpState(in string what, in dump_format fmt, in detail_level lvl, out string res );
+
+
+		// This should probably be in GenericService
+		//
+		void
+		restart();
+
+		void
+		forcedFailureConfiguration( in Service::NVPairList configuration )
+		raises( Service::ServiceException );
+
+		// This should probably be in GenericService.  This matches frame
+		// AppLog.h levels.
+		// 
+		enum log_level { inquiry, debug, info, warn, alarm, abort, ignore_all };
+
+		log_level
+		logLevel(in log_level lvl );
+
+    };
+};
+#pragma prefix ""
+#endif // CLUSTERIO_IDL

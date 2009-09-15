@@ -1,0 +1,27 @@
+#ident  "file_id Id: test_slurp.out.eng,v 1.2 2004/01/10 18:56:13 mgrosso Exp $"
+// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+//
+// File:      slurpmain.cpp
+// Author:    Matt Grosso
+// Created:   Sat Nov 14 16:25:58 EST 1998 on circe
+// Project:   
+// Purpose:   
+// 
+// Copyright (c) 1998 Matt Grosso.  All Rights Reserved.
+// 
+// Id: test_slurp.out.eng,v 1.2 2004/01/10 18:56:13 mgrosso Exp $
+// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+
+#include "Slurp.h"
+#include "BaseException.h"
+
+int main( int argc, char **argv ){
+    char *s = Slurp::slurpFile( "test-slurp.cpp" );
+    printf("%s", s );
+    return 0;
+};
+
+
+

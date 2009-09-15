@@ -1,0 +1,32 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      parsed_column.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Mar 16 13:44:04 EST 2003 on circe.looksmart.net
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: parsed_column.cplusql,v 1.2 2003/06/03 21:50:59 djain Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+create stream passwd using files ( "parsed_column.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+#skips all but the nfs user, just so we have a where clause at the same time.
+create stream passwd01 using passwd 
+        parse passwd.shell delimiter "/" 
+            into columns ( rootdir, topdir, therest )
+        where passwd.uid < "1000" 
+        ;
+create dest from passwd01 filename "parsed_column.01.out" ;
+
+#same rows as 01, but myfoo appended.
+create stream passwd02 using passwd01
+        parse passwd.shell delimiter "/" 
+            into columns ( rootdir2, topdir2 )
+        ;
+create dest from passwd02 filename "parsed_column.02.out" ;
+

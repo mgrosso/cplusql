@@ -1,0 +1,54 @@
+Index: cplusql.h
+===================================================================
+RCS file: /cvsroot/cplusql/cplusql/inc/cplusql.h,v
+retrieving revision 1.39
+retrieving revision 1.40
+diff -u -r1.39 -r1.40
+--- cplusql.h	22 Feb 2005 07:32:14 -0000	1.39
++++ cplusql.h	11 Mar 2005 19:57:19 -0000	1.40
+@@ -23,7 +23,7 @@
+ // this program; if not, write to the Free Software Foundation, Inc., 59 Temple
+ // Place, Suite 330, Boston, MA 02111-1307 USA
+ //
+-// $Id: cplusql.h,v 1.39 2005/02/22 07:32:14 mgrosso Exp $
++// $Id: cplusql.h,v 1.40 2005/03/11 19:57:19 mgrosso Exp $
+ // ----------------------------------------------------------------------
+ // ----------------------------------------------------------------------
+ #ifndef CPLUSQL_H
+@@ -32,23 +32,6 @@
+ extern "C" {
+ #endif
+ 
+-#define VARBUFLEN 8192
+-
+-#define CPLUSQL_NAMESPACE  "NAMESPACE"
+-#define CPLUSQL_NAMESPACE_DFLT  "default"
+-#define CPLUSQL_USE_FILE_SYSTEM "file"
+-
+-#define CPLUSQL_READ_BUFSIZE "CPLUSQL_READ_BUFSIZE"
+-#define CPLUSQL_READ_BUFSIZE_DFLT "262144"
+-
+-#define CPLUSQL_MAX_BAD_PARSE "CPLUSQL_MAX_BAD_PARSE"
+-#define CPLUSQL_MAX_BAD_PARSE_DFLT "0"
+-
+-#define CPLUSQL_DELIMITER "DELIMITER"
+-#define CPLUSQL_DELIMITER_DFLT "|"
+-
+-#define CPLUSQL_NOTHREADS "CPLUSQL_NOTHREADS"
+-#define CPLUSQL_NOTHREADS_DFLT "0"
+ 
+ typedef void * cplusql_id_t;
+ 
+@@ -602,6 +585,12 @@
+ cplusql_exec( cplusql_id_t exp );
+ 
+ cplusql_id_t
++cplusql_daemonize_exp();
++
++cplusql_id_t
++cplusql_expeval( cplusql_id_t operand );
++
++cplusql_id_t
+ cplusql_command_string_set(cplusql_id_t exp );
+ 
+ //called from cplusql.y

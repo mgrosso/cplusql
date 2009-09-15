@@ -1,0 +1,20 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      helloworld.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: abort.cplusql,v 1.1 2003/04/21 16:15:14 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "helloworld.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create dest from passwd filename "helloworld.output.out" ;
+

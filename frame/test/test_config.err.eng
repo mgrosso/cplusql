@@ -1,0 +1,52 @@
+foo=bar
+foo=fubar
+foo=fubar
+bar=barbara annnn
+
+Dumping all keys:
+--------
+bar=barbara annnn
+foo=fubar
+--------
+
+foo=fubar
+bar=barbara annnn
+fu=BACKIP
+foo=BUBBA
+bar=HUBBA
+fu=BACKIP
+
+Dumping all keys:
+--------
+bar=HUBBA
+foo=BUBBA
+fu=BACKIP
+--------
+
+
+Dumping all keys:
+--------
+bar=HUBBA
+foo=BUBBA
+fu=BACKIP
+--------
+
+
+Dumping all keys:
+--------
+  hello=funky
+aseld;fasdf=
+hello=funky
+hello baby=be my funky chicken!!!   
+hello2=funky2
+hello3=funky3 override
+hello4=funky4 override
+hello5=very funky
+--------
+
+fungi,1 -> 1
+fungi,2.2 -> 1
+fungb,0 -> 0
+fungb,1 -> 0
+fungd,1.5 -> 1.5
+fungd,1.6 -> 1.5

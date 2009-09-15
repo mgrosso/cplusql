@@ -1,0 +1,485 @@
+cplusql_getvar_wdflt: key file dflt -
+lex create
+lex WHITE
+lex namespace
+lex WHITE
+lex NAME localnss
+cplusql_string: localnss
+lex WHITE
+lex LPAREN
+lex WHITE
+lex NAME NSS_URL
+cplusql_string: NSS_URL
+lex EQUALS
+lex QUOTE start
+lex DOLLAR LBRACE in quote state
+lex ENV NSS_URL
+cplusql_getvar: NSS_URL
+lex UNPUT e
+lex UNPUT ce
+lex UNPUT ice
+lex UNPUT vice
+lex UNPUT rvice
+lex UNPUT ervice
+lex UNPUT Service
+lex UNPUT eService
+lex UNPUT ceService
+lex UNPUT aceService
+lex UNPUT paceService
+lex UNPUT SpaceService
+lex UNPUT eSpaceService
+lex UNPUT meSpaceService
+lex UNPUT ameSpaceService
+lex UNPUT NameSpaceService
+lex UNPUT #NameSpaceService
+lex UNPUT 9#NameSpaceService
+lex UNPUT 69#NameSpaceService
+lex UNPUT 669#NameSpaceService
+lex UNPUT 9669#NameSpaceService
+lex UNPUT :9669#NameSpaceService
+lex UNPUT 2:9669#NameSpaceService
+lex UNPUT 22:9669#NameSpaceService
+lex UNPUT 222:9669#NameSpaceService
+lex UNPUT w222:9669#NameSpaceService
+lex UNPUT dw222:9669#NameSpaceService
+lex UNPUT -dw222:9669#NameSpaceService
+lex UNPUT v-dw222:9669#NameSpaceService
+lex UNPUT sv-dw222:9669#NameSpaceService
+lex UNPUT :sv-dw222:9669#NameSpaceService
+lex UNPUT ::sv-dw222:9669#NameSpaceService
+lex UNPUT e::sv-dw222:9669#NameSpaceService
+lex UNPUT me::sv-dw222:9669#NameSpaceService
+lex UNPUT ame::sv-dw222:9669#NameSpaceService
+lex UNPUT name::sv-dw222:9669#NameSpaceService
+lex UNPUT aname::sv-dw222:9669#NameSpaceService
+lex UNPUT baname::sv-dw222:9669#NameSpaceService
+lex UNPUT rbaname::sv-dw222:9669#NameSpaceService
+lex UNPUT orbaname::sv-dw222:9669#NameSpaceService
+lex UNPUT corbaname::sv-dw222:9669#NameSpaceService
+lex QUOTED_STRING c
+lex PUSHQCHAR c
+lex QUOTED_STRING o
+lex PUSHQCHAR co
+lex QUOTED_STRING r
+lex PUSHQCHAR cor
+lex QUOTED_STRING b
+lex PUSHQCHAR corb
+lex QUOTED_STRING a
+lex PUSHQCHAR corba
+lex QUOTED_STRING n
+lex PUSHQCHAR corban
+lex QUOTED_STRING a
+lex PUSHQCHAR corbana
+lex QUOTED_STRING m
+lex PUSHQCHAR corbanam
+lex QUOTED_STRING e
+lex PUSHQCHAR corbaname
+lex QUOTED_STRING :
+lex PUSHQCHAR corbaname:
+lex QUOTED_STRING :
+lex PUSHQCHAR corbaname::
+lex QUOTED_STRING s
+lex PUSHQCHAR corbaname::s
+lex QUOTED_STRING v
+lex PUSHQCHAR corbaname::sv
+lex QUOTED_STRING -
+lex PUSHQCHAR corbaname::sv-
+lex QUOTED_STRING d
+lex PUSHQCHAR corbaname::sv-d
+lex QUOTED_STRING w
+lex PUSHQCHAR corbaname::sv-dw
+lex QUOTED_STRING 2
+lex PUSHQCHAR corbaname::sv-dw2
+lex QUOTED_STRING 2
+lex PUSHQCHAR corbaname::sv-dw22
+lex QUOTED_STRING 2
+lex PUSHQCHAR corbaname::sv-dw222
+lex QUOTED_STRING :
+lex PUSHQCHAR corbaname::sv-dw222:
+lex QUOTED_STRING 9
+lex PUSHQCHAR corbaname::sv-dw222:9
+lex QUOTED_STRING 6
+lex PUSHQCHAR corbaname::sv-dw222:96
+lex QUOTED_STRING 6
+lex PUSHQCHAR corbaname::sv-dw222:966
+lex QUOTED_STRING 9
+lex PUSHQCHAR corbaname::sv-dw222:9669
+lex QUOTED_STRING #
+lex PUSHQCHAR corbaname::sv-dw222:9669#
+lex QUOTED_STRING N
+lex PUSHQCHAR corbaname::sv-dw222:9669#N
+lex QUOTED_STRING a
+lex PUSHQCHAR corbaname::sv-dw222:9669#Na
+lex QUOTED_STRING m
+lex PUSHQCHAR corbaname::sv-dw222:9669#Nam
+lex QUOTED_STRING e
+lex PUSHQCHAR corbaname::sv-dw222:9669#Name
+lex QUOTED_STRING S
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameS
+lex QUOTED_STRING p
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSp
+lex QUOTED_STRING a
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpa
+lex QUOTED_STRING c
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpac
+lex QUOTED_STRING e
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpace
+lex QUOTED_STRING S
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceS
+lex QUOTED_STRING e
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceSe
+lex QUOTED_STRING r
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceSer
+lex QUOTED_STRING v
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceServ
+lex QUOTED_STRING i
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceServi
+lex QUOTED_STRING c
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceServic
+lex QUOTED_STRING e
+lex PUSHQCHAR corbaname::sv-dw222:9669#NameSpaceService
+lex QUOTE end
+cplusql_string: corbaname::sv-dw222:9669#NameSpaceService
+lex WHITE
+lex RPAREN
+yac 1: config_object: configpairs: 
+yac 1: configuration: config_object: 
+lex SEMICOLON
+yac 1: config_clause: 
+yac 1: created namespace 
+yac 1: statement: namespace_statement 
+yac 1: cplusqlfile: statement 
+lex WHITE\n
+lex create
+lex WHITE
+lex stream
+lex WHITE
+lex NAME singlecol2k
+cplusql_string: singlecol2k
+lex WHITE\n
+lex WHITE
+lex using
+lex WHITE
+lex files
+lex WHITE
+lex LPAREN
+lex WHITE
+lex QUOTE start
+lex QUOTED_STRING c
+lex PUSHQCHAR c
+lex QUOTED_STRING l
+lex PUSHQCHAR cl
+lex QUOTED_STRING u
+lex PUSHQCHAR clu
+lex QUOTED_STRING s
+lex PUSHQCHAR clus
+lex QUOTED_STRING t
+lex PUSHQCHAR clust
+lex QUOTED_STRING e
+lex PUSHQCHAR cluste
+lex QUOTED_STRING r
+lex PUSHQCHAR cluster
+lex QUOTED_STRING i
+lex PUSHQCHAR clusteri
+lex QUOTED_STRING o
+lex PUSHQCHAR clusterio
+lex QUOTED_STRING _
+lex PUSHQCHAR clusterio_
+lex QUOTED_STRING w
+lex PUSHQCHAR clusterio_w
+lex QUOTED_STRING r
+lex PUSHQCHAR clusterio_wr
+lex QUOTED_STRING i
+lex PUSHQCHAR clusterio_wri
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_writ
+lex QUOTED_STRING e
+lex PUSHQCHAR clusterio_write
+lex QUOTED_STRING .
+lex PUSHQCHAR clusterio_write.
+lex QUOTED_STRING i
+lex PUSHQCHAR clusterio_write.i
+lex QUOTED_STRING n
+lex PUSHQCHAR clusterio_write.in
+lex QUOTED_STRING p
+lex PUSHQCHAR clusterio_write.inp
+lex QUOTED_STRING u
+lex PUSHQCHAR clusterio_write.inpu
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_write.input
+lex QUOTED_STRING .
+lex PUSHQCHAR clusterio_write.input.
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_write.input.t
+lex QUOTED_STRING x
+lex PUSHQCHAR clusterio_write.input.tx
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_write.input.txt
+lex QUOTE end
+cplusql_string: clusterio_write.input.txt
+yac 3: quoted_string_set: QUOTED_STRING 
+yac 3: clusterio_write.input.txt 
+lex WHITE
+lex RPAREN
+yac 3: quotedlist:  
+yac 3: fileset:  
+lex WHITE
+lex columns
+lex WHITE
+lex LPAREN
+lex WHITE
+lex NAME col1
+cplusql_string: col1
+yac 3: quoted_name_set: NAME 
+yac 3: col1 
+lex WHITE
+lex RPAREN
+yac 3: quotednamelist:  
+yac 3: columnset:  
+lex SEMICOLON
+yac 3: stream: files 
+yac 3: statement: stream 
+yac 3: cplusqlfile:   cplusqlfile statement 
+lex WHITE\n
+lex create
+lex WHITE
+lex stream
+lex WHITE
+lex NAME singlecol2k_prime
+cplusql_string: singlecol2k_prime
+lex WHITE
+lex using
+lex WHITE
+lex NAME singlecol2k
+cplusql_string: singlecol2k
+yac 4: relation: NAME 
+yac 4: singlecol2k 
+lex WHITE\n
+lex usercolumns
+lex WHITE\n
+lex WHITE
+lex NAME cola
+cplusql_string: cola
+lex WHITE
+lex ceil
+lex LPAREN
+lex WHITE
+lex NAME col1
+cplusql_string: col1
+lex WHITE
+lex RPAREN
+yac 6: expression: NAME 
+yac 6: col1 
+yac 6: expression: ceil expression 
+lex WHITE\n
+lex WHITE
+lex COMMA
+yac 7: usercolumnset: usercolumn 
+lex WHITE
+lex NAME colb
+cplusql_string: colb
+lex WHITE
+lex NAME col1
+cplusql_string: col1
+lex WHITE
+lex MULTIPLY
+yac 7: expression: NAME 
+yac 7: col1 
+lex WHITE
+lex NAME col1
+cplusql_string: col1
+lex WHITE\n
+lex WHITE
+lex COMMA
+yac 8: expression: NAME 
+yac 8: col1 
+yac 8: usercolumnset: COMMA usercolumn 
+lex WHITE
+lex NAME colc
+cplusql_string: colc
+lex WHITE
+lex NAME col1
+cplusql_string: col1
+lex WHITE\n
+lex WHITE
+lex COMMA
+yac 9: expression: NAME 
+yac 9: col1 
+yac 9: usercolumnset: COMMA usercolumn 
+lex WHITE
+lex NAME cold
+cplusql_string: cold
+lex WHITE
+lex ceil
+lex LPAREN
+lex WHITE
+lex NAME col1
+cplusql_string: col1
+lex WHITE
+lex RPAREN
+yac 9: expression: NAME 
+yac 9: col1 
+yac 9: expression: floor expression 
+lex WHITE\n
+lex LPAREN
+yac 10: usercolumnset: COMMA usercolumn 
+yac 10: empty where_clause:  
+lex NAME IGNORE_SOURCE_COLUMNS
+cplusql_string: IGNORE_SOURCE_COLUMNS
+lex EQUALS
+lex NUMBER 1
+cplusql_string: 1
+lex RPAREN
+yac 10: config_object: configpairs: 
+yac 10: configuration: config_object: 
+lex WHITE\n
+lex SEMICOLON
+yac 11: config_clause: 
+yac 11: stream: from stream 
+yac 11: statement: stream 
+yac 11: cplusqlfile:   cplusqlfile statement 
+lex WHITE\n
+lex create
+lex WHITE
+lex dest
+lex WHITE
+lex from
+lex WHITE
+lex NAME singlecol2k_prime
+cplusql_string: singlecol2k_prime
+lex WHITE\n
+lex WHITE
+lex filename
+lex WHITE
+lex QUOTE start
+lex DOLLAR LBRACE in quote state
+lex ENV OUTPUT_FN
+cplusql_getvar: OUTPUT_FN
+lex UNPUT e
+lex UNPUT te
+lex UNPUT ite
+lex UNPUT rite
+lex UNPUT write
+lex UNPUT _write
+lex UNPUT o_write
+lex UNPUT io_write
+lex UNPUT rio_write
+lex UNPUT erio_write
+lex UNPUT terio_write
+lex UNPUT sterio_write
+lex UNPUT usterio_write
+lex UNPUT lusterio_write
+lex UNPUT clusterio_write
+lex QUOTED_STRING c
+lex PUSHQCHAR c
+lex QUOTED_STRING l
+lex PUSHQCHAR cl
+lex QUOTED_STRING u
+lex PUSHQCHAR clu
+lex QUOTED_STRING s
+lex PUSHQCHAR clus
+lex QUOTED_STRING t
+lex PUSHQCHAR clust
+lex QUOTED_STRING e
+lex PUSHQCHAR cluste
+lex QUOTED_STRING r
+lex PUSHQCHAR cluster
+lex QUOTED_STRING i
+lex PUSHQCHAR clusteri
+lex QUOTED_STRING o
+lex PUSHQCHAR clusterio
+lex QUOTED_STRING _
+lex PUSHQCHAR clusterio_
+lex QUOTED_STRING w
+lex PUSHQCHAR clusterio_w
+lex QUOTED_STRING r
+lex PUSHQCHAR clusterio_wr
+lex QUOTED_STRING i
+lex PUSHQCHAR clusterio_wri
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_writ
+lex QUOTED_STRING e
+lex PUSHQCHAR clusterio_write
+lex QUOTED_STRING .
+lex PUSHQCHAR clusterio_write.
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_write.t
+lex QUOTED_STRING x
+lex PUSHQCHAR clusterio_write.tx
+lex QUOTED_STRING t
+lex PUSHQCHAR clusterio_write.txt
+lex QUOTE end
+cplusql_string: clusterio_write.txt
+lex WHITE
+lex LPAREN
+lex WHITE
+lex NAME NAMESPACE
+cplusql_string: NAMESPACE
+lex EQUALS
+lex QUOTE start
+lex QUOTED_STRING l
+lex PUSHQCHAR l
+lex QUOTED_STRING o
+lex PUSHQCHAR lo
+lex QUOTED_STRING c
+lex PUSHQCHAR loc
+lex QUOTED_STRING a
+lex PUSHQCHAR loca
+lex QUOTED_STRING l
+lex PUSHQCHAR local
+lex QUOTED_STRING n
+lex PUSHQCHAR localn
+lex QUOTED_STRING s
+lex PUSHQCHAR localns
+lex QUOTED_STRING s
+lex PUSHQCHAR localnss
+lex QUOTE end
+cplusql_string: localnss
+lex COMMA
+lex WHITE
+lex NAME WRITERID
+cplusql_string: WRITERID
+lex EQUALS
+lex QUOTE start
+lex DOLLAR LBRACE in quote state
+lex ENV WRITER_ID
+cplusql_getvar: WRITER_ID
+lex UNPUT t
+lex UNPUT ut
+lex UNPUT _ut
+lex UNPUT t_ut
+lex UNPUT st_ut
+lex UNPUT est_ut
+lex UNPUT dest_ut
+lex QUOTED_STRING d
+lex PUSHQCHAR d
+lex QUOTED_STRING e
+lex PUSHQCHAR de
+lex QUOTED_STRING s
+lex PUSHQCHAR des
+lex QUOTED_STRING t
+lex PUSHQCHAR dest
+lex QUOTED_STRING _
+lex PUSHQCHAR dest_
+lex QUOTED_STRING u
+lex PUSHQCHAR dest_u
+lex QUOTED_STRING t
+lex PUSHQCHAR dest_ut
+lex QUOTE end
+cplusql_string: dest_ut
+lex WHITE
+lex RPAREN
+yac 13: config_object: configpairs: 
+yac 13: configuration: config_object: 
+lex SEMICOLON
+yac 13: config_clause: 
+yac 13: dest: file 
+yac 13: statement: dest 
+yac 13: cplusqlfile:   cplusqlfile statement 
+lex WHITE\n
+sync start Fri Jun 18 13:13:10 2004
+
+Fri Jun 18 13:13:17 2004
+
+sync stop Fri Jun 18 13:13:17 2004
+

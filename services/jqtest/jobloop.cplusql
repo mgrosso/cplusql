@@ -1,0 +1,8 @@
+                                                                                                                                                                                                      
+FIRSTBUCKET="0" ;
+LASTBUCKET="100" ;
+SLEEPTIME="10" ;
+
+create jobq q ( JOB_URL="corbaname::${NS_HOST}:${NS_PORT}#JobQueueService" );
+foreach j in ( ${FIRSTBUCKET} ... ${LASTBUCKET} )
+    "echo \" submitting __j__\"; create job x__j__ using q command \"${PWD}/dummyjob.sh ${SLEEPTIME} dummy-__j__.out\" ( JOB_OUTPUT=\"dummy-__j__.err\", JOB_TARGET=\"dummy-__j__.out\", JOB_TIMEOUT=0 );";

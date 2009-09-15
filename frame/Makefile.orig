@@ -1,0 +1,17 @@
+include ./make.env
+
+all::	lib
+
+lib:
+	cd src ; $(MAKE) 
+
+install:
+	cd src ; $(MAKE) install
+
+test:   lib
+	cd test ; $(MAKE) 
+
+clean:
+	cd src ; $(MAKE) clean
+	cd test ; $(MAKE) clean
+

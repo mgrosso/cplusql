@@ -1,0 +1,39 @@
+adm|x|3|4|adm|/var/adm|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|3|adm|var adm|m
+apache|x|48|48|Apache|/var/www|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|6|apache|var www|ache
+bin|x|1|1|bin|/bin|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|3|bin|bin|n
+daemon|x|2|2|daemon|/sbin|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|6|daemon|sbin|emon
+desktop|x|80|80|desktop|/var/lib/menu/kde|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|7|desktop|var lib menu kde|sktop
+ftp|x|14|50|FTP User|/var/ftp|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|8|ftp user|var ftp|P User
+games|x|12|100|games|/usr/games|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|games|usr games|mes
+gdm|x|42|42|DUMMY|/var/gdm|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|dummy|var gdm|MMY
+gopher|x|13|30|gopher|/var/gopher|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|6|gopher|var gopher|pher
+halt|x|7|0|halt|/sbin|/sbin/halt|0|10|sbin halt|sbin halt|sbin halt|sbin halt|halt|sbin halt|4|halt|sbin|lt
+lp|x|4|7|lp|/var/spool/lpd|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|2|lp|var lpd|
+mail|x|8|12|mail|/var/spool/mail|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|4|mail|var mail|il
+mailnull|x|47|47|DUMMY|/var/spool/mqueue|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|dummy|var mqueue|MMY
+mgrosso|x|500|500|Matthew Grosso|/home/mgrosso|/bin/bash|5|9|bash|bash|bash|bin bash|bin bash|bin bash|14|matthew grosso|mgrosso|tthew Grosso
+named|x|25|25|Named|/var/named|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|named|var named|med
+news|x|9|13|news|/etc/news||0|0|||||||4|news|etc news|ws
+nfsnobody|x|65534|65534|Anonymous NFS User|/var/lib/nfs|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|18|anonymous nfs user|var lib nfs|onymous NFS 
+nobody|x|99|99|Nobody|/|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|6|nobody||body
+nscd|x|28|28|NSCD Daemon|/|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|11|nscd daemon||CD Daemon
+ntp|x|38|38|DUMMY|/etc/ntp|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|dummy|etc ntp|MMY
+operator|x|11|0|operator|/root|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|8|operator|root|erator
+pcap|x|77|77|x|/var/arpwatch|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|1|x|var arpwatch|
+postfix|x|89|89|DUMMY|/var/spool/postfix|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|dummy|var postfix|MMY
+postgres|x|26|26|PostgreSQL Server|/var/lib/pgsql|/bin/bash|5|9|bash|bash|bash|bin bash|bin bash|bin bash|17|postgresql server|var lib pgsql|stgreSQL Ser
+privoxy|x|73|73|DUMMY|/etc/privoxy||0|0|||||||5|dummy|etc privoxy|MMY
+pvm|x|24|24|DUMMY|/usr/share/pvm3|/bin/bash|5|9|bash|bash|bash|bin bash|bin bash|bin bash|5|dummy|usr share pvm3|MMY
+root|x|0|0|root|/root|/bin/bash|5|9|bash|bash|bash|bin bash|bin bash|bin bash|4|root|root|ot
+rpc|x|32|32|Portmapper RPC user|/|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|19|portmapper rpc user||rtmapper RPC
+rpcuser|x|29|29|RPC Service User|/var/lib/nfs|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|16|rpc service user|var lib nfs|C Service Us
+rpm|x|37|37|DUMMY|/var/lib/rpm|/bin/bash|5|9|bash|bash|bash|bin bash|bin bash|bin bash|5|dummy|var lib rpm|MMY
+shutdown|x|6|0|shutdown|/sbin|/sbin/shutdown|0|14|sbin shutdown|sbin shutdown|sbin shutdown|sbin shutdown|shutdown|sbin shutdown|8|shutdown|sbin|utdown
+smmsp|x|51|51|DUMMY|/var/spool/mqueue|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|5|dummy|var mqueue|MMY
+squid|x|23|23|DUMMY|/var/spool/squid|/dev/null|0|9|dev null|dev null|dev null|dev null|dev null|dev null|5|dummy|var squid|MMY
+sshd|x|74|74|Privilege-separated SSH|/var/empty/sshd|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|23|privilege separated ssh|var empty sshd|ivilege-sepa
+sync|x|5|0|sync|/sbin|/bin/sync|0|9|sync|sync|sync|bin sync|bin sync|bin sync|4|sync|sbin|nc
+uucp|x|10|14|uucp|/var/spool/uucp|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|4|uucp|var uucp|cp
+vcsa|x|69|69|virtual console memory owner|/dev|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|28|virtual console memory owner|dev|rtual consol
+webalizer|x|67|67|Webalizer|/var/www/html/usage|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|9|webalizer|var www html usage|balizer
+xfs|x|43|43|X Font Server|/etc/X11/fs|/sbin/nologin|0|13|sbin nologin|sbin nologin|sbin nologin|sbin nologin|nologin|sbin nologin|13|x font server|etc x11 fs|Font Server

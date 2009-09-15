@@ -1,0 +1,4 @@
+create namespace nss ;
+namespace nss touch "hello" ( EXCLUSIVE=1, COPIES=${COPIES} );
+namespace nss mv "hello" "goodbye" ;
+namespace nss rm "goodbye" ;

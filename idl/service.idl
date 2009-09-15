@@ -1,0 +1,162 @@
+/* -*- C++ -*- */
+// service.idl
+
+#if !defined (SERVICE_IDL)
+#define SERVICE_IDL
+
+#pragma prefix "cplusql.org"
+
+module Service
+{
+    //-------------------------------------------------------------
+    // all servants provide and take status through these.
+    //-------------------------------------------------------------
+    struct NVPair
+    {
+        string name;
+        string value;
+    };
+    typedef sequence<NVPair>    NVPairList;
+    typedef string              service_name_t;
+    typedef string              url_t;
+    typedef long                time_t;
+    typedef string              hostname_t;
+    typedef string              ior_t;
+    typedef short               port_t;
+    typedef short               pid_t;
+    typedef string              key_t;
+    typedef sequence<key_t>     KeyList;
+
+    struct ServiceRef
+    {
+        service_name_t  serviceName;
+        url_t           url;
+        hostname_t      hostname;
+        ior_t           ior;
+    };
+
+    typedef sequence<ServiceRef> ServiceRefList; 
+
+    struct ServiceStatus
+    {
+        ServiceRef      ref;
+        time_t          statusReceivedTime;
+        pid_t           pid;
+        boolean         isPendingShutdown;
+        // a service may be pending Shutdown
+        // even if it is waiting for running process to complete
+        boolean         live ;
+        // a service is not live if this latest status was receive
+        //  more than STATUS_MAX_WAIT seconds ago
+        NVPairList      details ;
+    };
+    typedef sequence< ServiceStatus > ServiceStatusList ;
+
+    //-------------------------------------------------------------
+    // all methods that throw, throw these. errno will either correspond
+    // to a unix errno, or it will be zero, or it will be > 128
+    //-------------------------------------------------------------
+    exception ServiceException
+    {
+        short  errno_short ;
+        string what_string ; 
+    };
+
+    // not yet sure how to indicate that this is an extension
+    exception PendingShutdownException 
+    {
+    };
+
+    interface GenericService 
+    {
+
+        //this method should never have side effects.
+        void            ping()
+            raises( ServiceException, PendingShutdownException );
+        // test: ping to running service should result in no output
+        // test: ping to non-existent service should result in CORBA exception raised!TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+
+        //this method should never have side effects.
+        ServiceStatus   pullStatus ()
+            raises( ServiceException );
+        // test: if this is called after a gracefulShutdown and while a long job is still running, pendingShutdown should be true
+        // test: if this is called and shutdown is not pending, it should returna ServiceStatus with the expected results
+
+        void            reconfigure( in NVPairList configuration )
+            raises( ServiceException, PendingShutdownException );
+        // this will not be implemented at first
+        // test: tbd
+
+        //throw CORBA_NOT_IMPLEMENTED if your service does not support this.
+        void            gracefulShutdown()
+            raises( ServiceException, PendingShutdownException );
+        // test: if this invoked while there is a lengthy job running, subsequent calls to this service will yield PendingShutdownException
+        // test: once there are no jobs running, subsequent calls will yiend CORBA exception raised!TRANSIENT (IDL:omg.org/CORBA/TRANSIENT:1.0)
+    };
+
+    interface NodeMonitorPushConsumer
+    {
+        //do not throw please. NodeMonitorService does not care about consumers
+        //this is called by any service to which this consumer is subscribed
+        //in cases where it is intended to send a list, like when a local Node Monitor pushes
+        //a list of serviceStatuses for each of the JobExecs that have pushed to it,
+        //that list will be in one of the NVPairs on this status
+        // this will eventually return the ServiceRef of the next NodeMonitor that the
+        // pushes should go to (there will be a stack so that if the
+        // new one goes away, you remember who you used to push to
+        // returns void for now, but soon:
+        //ServiceRef 
+        void pushStatusList( in ServiceStatusList serviceStatusList )
+            raises( ServiceException, PendingShutdownException );
+        // test: this is a marker and the test will be defined in implementing classes
+    };
+
+    interface NodeMonitorService : GenericService, NodeMonitorPushConsumer  
+    {
+
+        void                registerService(  
+            in ServiceRef ref
+        ) raises( ServiceException, PendingShutdownException );
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: subsequent call to pullStatus and examination of the NodeMonitor's ServiceStatus's NVPair for key REGISTERED_SERVICES will yield expected results
+
+        void                unregisterService(  
+            in ServiceRef ref
+        ) raises( ServiceException, PendingShutdownException );
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: subsequent call to pullStatus and examination of the NodeMonitor's ServiceStatus's NVPair for key REGISTERED_SERVICES will yield expected results
+
+        // this will not be implemented at first
+        // test: tbd
+
+        //if both strings are empty, returns all statuses.
+        //
+        //if service is not null, only return services with that ServiceName.
+        //if hostname is not null, only return services with that hostname.
+        ServiceStatusList   pullStatusList ( 
+            in service_name_t serviceName, in hostname_t hostname 
+        ) raises( ServiceException, PendingShutdownException );
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: invoked with a specific serviceName and hostName will return expected results
+        // test: invoked with a specific serviceName and null hostName 
+        // test: invoked with a null serviceName and hostName will return expected results
+
+        void                subscribePushConsumer(
+            in ServiceRef pushConsumer, 
+            in service_name_t serviceName,  
+            in hostname_t host
+        ) raises( ServiceException, PendingShutdownException );
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: subsequent call to pullStatus and observation of detail NVPair named SUBSCRIBED_PUSH_CONSUMER_LIST will yield expected results
+
+        void                unsubscribePushConsumer(
+            in ServiceRef pushConsumer 
+        ) raises( ServiceException, PendingShutdownException );
+        // test: if the server is being shutdown, receive PendingShutdownException
+        // test: subsequent call to pullStatus and observation of detail NVPair named SUBSCRIBED_PUSH_CONSUMER_LIST will yield expected results
+    };
+};
+
+#pragma prefix ""
+#endif // SERVICE_IDL
+

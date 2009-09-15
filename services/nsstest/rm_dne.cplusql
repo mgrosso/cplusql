@@ -1,0 +1,2 @@
+create namespace nss ;
+namespace nss rm "doesnotexist" ;

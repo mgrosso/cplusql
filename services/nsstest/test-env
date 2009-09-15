@@ -1,0 +1,16 @@
+export APPLOG_MINLOG=0
+
+export NS_HOST=localhost
+export NS_PORT=9999
+
+#NSS_URL should be unnecessary, NS_HOST+NS_PORT are good enough.
+#export NSS_URL="corbaname::${NS_HOST}:${NS_PORT}#NameSpaceService"
+export NSS_IOR_FILE=NameSpaceService.ior
+export NSS_IOR_URI=file://${JQS_IOR_FILE}
+
+export NMS_SUBSCRIBER_THREAD_SLEEPTIME=2000000
+export NMS_REGISTRANT_THREAD_SLEEPTIME=2000000
+
+#for cplusql
+export OUTPUT_FN="clusterio_write"
+export WRITER_ID="dest_ut"

@@ -1,0 +1,47 @@
+
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      presorted_sync.cplusql
+## Author:    mgrosso Matt Grosso
+## Created:   Sat Jun 14 15:27:01 PDT 2003 on sf-devdw040.looksmart.com
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2003 LookSmart. All Rights Reserved.
+## 
+## $Id: presorted_sync.cplusql,v 1.1 2003/06/14 22:43:46 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+create stream passwd using files ( "presorted_sync.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+#make sure to support empty metrics list.
+create stream passwd02 using passwd
+    presorted groupby columns ( shell )
+    metrics
+        uidsum sum( passwd.uid ) ;
+create dest from passwd02 filename "presorted_sync.01.out" ;
+sync;
+
+create stream passwd03 using files ( "presorted_sync.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+create stream passwd04 using passwd03
+    presorted groupby columns ( shell )
+    metrics
+        uidsum sum( passwd03.uid ) ;
+
+create dest from passwd04 filename "presorted_sync.02.out" ;
+
+sync;
+
+create stream passwd05 using files ( "presorted_sync.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+create stream passwd06 using passwd05
+    presorted groupby columns ( shell )
+    metrics
+        uidsum sum( passwd05.uid ) ;
+create dest from passwd06 filename "presorted_sync.03.out" ;
+create dest from passwd05 filename "presorted_sync.04.out" ;
+
+sync;

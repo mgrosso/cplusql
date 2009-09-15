@@ -1,0 +1,38 @@
+adm|x|3|4|adm|/var/adm|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|12|9|16|notme|notme|myfoo|-4
+apache|x|48|48|Apache|/var/www|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|2304|2304|2401|notme|notme|myfoo|-48
+bin|x|1|1|bin|/bin|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1|1|4|notme|notme|myfoo|-1
+daemon|x|2|2|daemon|/sbin|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|4|4|9|notme|notme|myfoo|-2
+desktop|x|80|80|desktop|/var/lib/menu/kde|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|6400|6400|6561|notme|notme|myfoo|-80
+ftp|x|14|50|FTP User|/var/ftp|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|700|196|225|notme|notme|myfoo|-50
+games|x|12|100|games|/usr/games|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1200|144|169|notme|notme|myfoo|-100
+gdm|x|42|42|DUMMY|/var/gdm|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1764|1764|1849|notme|notme|myfoo|-42
+gopher|x|13|30|gopher|/var/gopher|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|390|169|196|notme|notme|myfoo|-30
+halt|x|7|0|halt|/sbin|/sbin/halt|myliteral|embedded # octothorpe|embedded ' quote|0|-1|0|49|64|notme|notme|myfoo|0
+lp|x|4|7|lp|/var/spool/lpd|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|28|16|25|notme|notme|myfoo|-7
+mail|x|8|12|mail|/var/spool/mail|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|96|64|81|notme|notme|myfoo|-12
+mailnull|x|47|47|DUMMY|/var/spool/mqueue|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|2209|2209|2304|notme|notme|myfoo|-47
+mgrosso|x|500|500|Matthew Grosso|/home/mgrosso|/bin/bash|myliteral|embedded # octothorpe|embedded ' quote|0|-1|250000|250000|251001|mgrosso|still mgrosso|myfoo|-500
+named|x|25|25|Named|/var/named|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|625|625|676|notme|notme|myfoo|-25
+news|x|9|13|news|/etc/news||myliteral|embedded # octothorpe|embedded ' quote|0|-1|117|81|100|notme|notme|myfoo|-13
+nobody|x|99|99|Nobody|/|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|9801|9801|10000|notme|notme|myfoo|-99
+nscd|x|28|28|NSCD Daemon|/|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|784|784|841|notme|notme|myfoo|-28
+ntp|x|38|38|DUMMY|/etc/ntp|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1444|1444|1521|notme|notme|myfoo|-38
+operator|x|11|0|operator|/root|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|0|121|144|notme|notme|myfoo|0
+pcap|x|77|77|x|/var/arpwatch|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|5929|5929|6084|notme|notme|myfoo|-77
+postfix|x|89|89|DUMMY|/var/spool/postfix|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|7921|7921|8100|notme|notme|myfoo|-89
+postgres|x|26|26|PostgreSQL Server|/var/lib/pgsql|/bin/bash|myliteral|embedded # octothorpe|embedded ' quote|0|-1|676|676|729|notme|notme|myfoo|-26
+privoxy|x|73|73|DUMMY|/etc/privoxy||myliteral|embedded # octothorpe|embedded ' quote|0|-1|5329|5329|5476|notme|notme|myfoo|-73
+pvm|x|24|24|DUMMY|/usr/share/pvm3|/bin/bash|myliteral|embedded # octothorpe|embedded ' quote|0|-1|576|576|625|notme|notme|myfoo|-24
+root|x|0|0|root|/root|/bin/bash|myliteral|embedded # octothorpe|embedded ' quote|0|-1|0|0|1|notme|notme|myfoo|0
+rpc|x|32|32|Portmapper RPC user|/|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1024|1024|1089|notme|notme|myfoo|-32
+rpcuser|x|29|29|RPC Service User|/var/lib/nfs|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|841|841|900|notme|notme|myfoo|-29
+rpm|x|37|37|DUMMY|/var/lib/rpm|/bin/bash|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1369|1369|1444|notme|notme|myfoo|-37
+shutdown|x|6|0|shutdown|/sbin|/sbin/shutdown|myliteral|embedded # octothorpe|embedded ' quote|0|-1|0|36|49|notme|notme|myfoo|0
+smmsp|x|51|51|DUMMY|/var/spool/mqueue|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|2601|2601|2704|notme|notme|myfoo|-51
+squid|x|23|23|DUMMY|/var/spool/squid|/dev/null|myliteral|embedded # octothorpe|embedded ' quote|0|-1|529|529|576|notme|notme|myfoo|-23
+sshd|x|74|74|Privilege-separated SSH|/var/empty/sshd|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|5476|5476|5625|notme|notme|myfoo|-74
+sync|x|5|0|sync|/sbin|/bin/sync|myliteral|embedded # octothorpe|embedded ' quote|0|-1|0|25|36|notme|notme|myfoo|0
+uucp|x|10|14|uucp|/var/spool/uucp|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|140|100|121|notme|notme|myfoo|-14
+vcsa|x|69|69|virtual console memory owner|/dev|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|4761|4761|4900|notme|notme|myfoo|-69
+webalizer|x|67|67|Webalizer|/var/www/html/usage|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|4489|4489|4624|notme|notme|myfoo|-67
+xfs|x|43|43|X Font Server|/etc/X11/fs|/sbin/nologin|myliteral|embedded # octothorpe|embedded ' quote|0|-1|1849|1849|1936|notme|notme|myfoo|-43

@@ -1,0 +1,4 @@
+create stream input_stream
+    using files ( "ceil_split.input.txt" ) columns ( column_in );
+create dest from input_stream template "ceil_split.%s.out" 
+    ceil( linenumber( input_stream ) / 2 );

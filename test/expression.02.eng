@@ -1,0 +1,15 @@
+adm|x|3|4|adm|/var/adm|/sbin/nologin
+bin|x|1|1|bin|/bin|/sbin/nologin
+daemon|x|2|2|daemon|/sbin|/sbin/nologin
+ftp|x|14|50|FTP User|/var/ftp|/sbin/nologin
+games|x|12|100|games|/usr/games|/sbin/nologin
+gopher|x|13|30|gopher|/var/gopher|/sbin/nologin
+halt|x|7|0|halt|/sbin|/sbin/halt
+lp|x|4|7|lp|/var/spool/lpd|/sbin/nologin
+mail|x|8|12|mail|/var/spool/mail|/sbin/nologin
+news|x|9|13|news|/etc/news|
+operator|x|11|0|operator|/root|/sbin/nologin
+root|x|0|0|root|/root|/bin/bash
+shutdown|x|6|0|shutdown|/sbin|/sbin/shutdown
+sync|x|5|0|sync|/sbin|/bin/sync
+uucp|x|10|14|uucp|/var/spool/uucp|/sbin/nologin

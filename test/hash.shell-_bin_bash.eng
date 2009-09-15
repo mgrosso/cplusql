@@ -1,0 +1,5 @@
+mgrosso|x|500|500|Matthew Grosso|_home_mgrosso|_bin_bash
+postgres|x|26|26|PostgreSQL Server|_var_lib_pgsql|_bin_bash
+pvm|x|24|24|DUMMY|_usr_share_pvm3|_bin_bash
+root|x|0|0|root|_root|_bin_bash
+rpm|x|37|37|DUMMY|_var_lib_rpm|_bin_bash

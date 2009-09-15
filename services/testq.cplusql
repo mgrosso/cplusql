@@ -1,0 +1,5 @@
+
+create jobq myq ( JOB_URL="corbaname::localhost:9999#JobQueueService" );
+create job j2 using myq command "${COMMAND}" ( JOB_EXCLUSIVE="0", JOB_TIMEOUT="0" );
+create job j3 using myq command "${COMMAND}" ( JOB_EXCLUSIVE="0", JOB_TIMEOUT="0" );
+

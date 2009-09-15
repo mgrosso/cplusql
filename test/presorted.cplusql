@@ -1,0 +1,47 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      hello.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: presorted.cplusql,v 1.2 2003/06/03 21:50:59 djain Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "presorted.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+#about half the rows will match this
+create stream passwd01 using passwd 
+    usercolumn lt20 if( passwd.uid < "20" ) { "1" } else { "0" } ;
+
+#make sure to support empty metrics list.
+create stream passwd02 using passwd01 
+    presorted groupby columns ( shell )
+    metrics 
+        uidsum sum( passwd01.uid )
+       ,uidmin int_min( passwd01.uid )
+       ,uidmax int_max( passwd01.uid )
+       ,uidfirst first( passwd01.uid )
+       ,uidlast last( passwd01.uid )
+       ,uidcnt count()
+       ,uidcnt_distinct count_distinct( passwd01.uid )
+       ,uidcnt_changes count_changes( passwd01.uid )
+       ,uidstrmin str_min( passwd01.uid )
+       ,uidstrmax str_max( passwd01.uid )
+       ,unamestrmin str_min( passwd01.uname )
+       ,unamestrmax str_max( passwd01.uname )
+    where 
+    !
+    passwd01.uid 
+    = 
+    "500" 
+    ;
+
+create dest from passwd02 filename "presorted.02.out" ;
+

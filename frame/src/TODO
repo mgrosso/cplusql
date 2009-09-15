@@ -1,0 +1,4 @@
+app log
+exec pipe
+event hooks, chains, templates
+simple key/value blob persistence

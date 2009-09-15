@@ -1,0 +1,35 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      helloworld.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: math.cplusql,v 1.1 2004/09/28 23:55:08 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "math.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+
+create stream p2 using passwd
+    usercolumn 
+        dummy "0" , 
+        uid uid , 
+        lnuid ln ( uid , 0 ) 
+        (IGNORE_SOURCE_COLUMNS=1) ;
+
+create dest from p2 filename "math.output.out" ;
+create stream p3 using p2 presorted
+    groupby columns (dummy )
+    metrics 
+        avg_uid avg( uid ),
+        avg_ln_uid avg( lnuid )
+        (IGNORE_SOURCE_COLUMNS=1) ;
+    ;
+create dest from p3 filename "math.output2.out" ;
+

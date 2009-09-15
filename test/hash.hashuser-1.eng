@@ -1,0 +1,13 @@
+bin|x|1|1|bin|_bin|_sbin_nologin
+daemon|x|2|2|daemon|_sbin|_sbin_nologin
+gopher|x|13|30|gopher|_var_gopher|_sbin_nologin
+halt|x|7|0|halt|_sbin|_sbin_halt
+mgrosso|x|500|500|Matthew Grosso|_home_mgrosso|_bin_bash
+nfsnobody|x|65534|65534|Anonymous NFS User|_var_lib_nfs|_sbin_nologin
+nscd|x|28|28|NSCD Daemon|_|_sbin_nologin
+ntp|x|38|38|DUMMY|_etc_ntp|_sbin_nologin
+postgres|x|26|26|PostgreSQL Server|_var_lib_pgsql|_bin_bash
+sshd|x|74|74|Privilege-separated SSH|_var_empty_sshd|_sbin_nologin
+uucp|x|10|14|uucp|_var_spool_uucp|_sbin_nologin
+webalizer|x|67|67|Webalizer|_var_www_html_usage|_sbin_nologin
+xfs|x|43|43|X Font Server|_etc_X11_fs|_sbin_nologin

@@ -1,0 +1,190 @@
+#ident "file_id $Id: ByteStripExpression.cpp,v 1.1 2005/02/22 07:19:16 mgrosso Exp $"
+// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+//
+// File:      ByteStripExpression.cpp
+// Author:    mgrosso 
+// Created:   Mon Feb 21 19:07:25 EST 2005 on upto11
+// Project:   
+// Purpose:   
+// 
+// Copyright (c) 2005 
+// 
+// $Id: ByteStripExpression.cpp,v 1.1 2005/02/22 07:19:16 mgrosso Exp $
+// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+
+#include "ByteStripExpression.h"
+#include "ByteBuf.h"
+#include "BaseException.h"
+
+class ByteStripExpressionPriv 
+{
+    ExpressionPtr           op_ ;
+    private:
+    friend class ByteStripExpression ;
+    ByteBuf     buf_ ;
+    char map_ [256];
+    char actions_ [256];
+    char *    raw_;
+    enum eaction { eSTOP, eSKIP, eSQUEEZE, eMAP };
+
+    void setmap( char *map, const char *keys, eaction action );
+    void notify();
+
+    ByteStripExpressionPriv(
+        ExpressionPtr &operand,
+        const char *squeeze_chars,
+        const char *skip_chars,
+        const char *mapfrom,
+        const char *mapto
+    );
+};
+
+ByteStripExpression::ByteStripExpression(
+        ExpressionPtr &operand,
+        const char *squeeze_chars,
+        const char *skip_chars,
+        const char *mapfrom,
+        const char *mapto
+)
+{
+    d_=new ByteStripExpressionPriv (
+        operand, squeeze_chars, skip_chars, mapfrom, mapto
+    );
+}
+
+ByteStripExpression::~ByteStripExpression()
+{
+    delete d_;
+}
+
+void 
+ByteStripExpression::notify()
+{
+    d_->notify();
+}
+
+const char * 
+ByteStripExpression::getRaw()
+{
+    return d_->raw_;
+}
+
+const char * 
+ByteStripExpression::getRaw() const 
+{
+    return d_->raw_;
+}
+
+
+void 
+ByteStripExpressionPriv::notify()
+{
+    op_->notify();
+    const char *src = op_->getRaw();
+    buf_.reset();
+    
+    char prevchar='\0';
+    ByteStripExpressionPriv::eaction prevaction = eSTOP;
+    char c;
+    for( const char *s = src; *s ; ++s )
+    {
+        c=*s;
+        switch( actions_[static_cast<int>(c)])
+        {
+            case eSTOP:
+                //not reached. for loop breaks on null, and 
+                //NULL is only char that should be mapped to eSTOP
+                //so this case statement is either good defensive
+                //programming or paranoid obfuscation.
+                buf_.append('\0');
+                raw_ = buf_.buf();
+                return;
+                break;
+            case eSKIP:
+                break;
+            case eSQUEEZE:
+                prevchar=c;
+                prevaction=eSQUEEZE;
+                break;
+            case eMAP:
+                if( prevaction == eSQUEEZE )
+                {
+                    buf_.append(prevchar);
+                }
+                prevchar=map_[static_cast<int>(c)];
+                prevaction=eMAP;
+                buf_.append(prevchar);
+                break;
+            default:
+                PANICV(
+                    "internal error: bad programmer, no cookie!"
+                    "input[%s], remaining[%s], c[%i], action[%i]",
+                    src, s, c, actions_[static_cast<int>(c)] );
+        }
+    }
+    buf_.append('\0');
+    raw_ = buf_.buf();
+    return;
+}
+
+void
+ByteStripExpressionPriv::setmap( 
+    char *map, const char *keys, ByteStripExpressionPriv::eaction action )
+{
+    for( const char *s=keys; s && *s; ++s )
+    {
+        map[*s]=action;
+    }
+}
+
+ByteStripExpressionPriv::ByteStripExpressionPriv(
+    ExpressionPtr &operand,
+    const char *squeeze_chars,
+    const char *skip_chars,
+    const char *mapfrom,
+    const char *mapto
+)
+{
+    if(!squeeze_chars)
+    {
+        squeeze_chars="";
+    }
+    if(!skip_chars)
+    {
+        skip_chars="";
+    }
+    for( int i =0; i<256; ++i )
+    {
+        map_[i]=i;
+    }
+    actions_[0]=eSTOP;
+    for( int i =1; i<256; ++i )
+    {
+        actions_[i]=eMAP;
+    }
+    setmap( & actions_[0], squeeze_chars, eSQUEEZE );
+    setmap( & actions_[0], skip_chars, eSKIP );
+    setmap( & actions_[0], mapfrom, eMAP );
+    if(( mapfrom || mapto )&& !(mapfrom && mapto ))
+    {
+        PANICV( "mapfrom and mapto args must be of equal length.");
+    }
+    if( !(mapfrom && mapto ))
+    {
+        return;
+    }
+    if( strlen( mapfrom) != strlen( mapto ))
+    {
+        PANICV( "mapfrom and mapto args must be of equal length.");
+    }
+    const char *f;
+    const char *t;
+    for( f=mapfrom, t=mapto ; *f; ++f,++t )
+    {
+        int fi = *f;
+        map_[fi]=*t;
+    }
+}
+

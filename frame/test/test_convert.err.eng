@@ -1,0 +1,441 @@
+testing NULL
+testing 
+testing true
+testing false
+testing yes
+testing no
+testing 0
+testing 1
+testing -1
+testing i am not a number!
+testing 69
+testing 69.000
+testing 69.000000000
+testing 0x69
+testing 0x69
+b[]:  1
+i[]:  105
+d[]:  105
+ll[]:  105
+ld[]:  105
+
+testing 1
+b[]:  1
+i[]:  1
+d[]:  1
+ll[]:  1
+ld[]:  1
+
+testing 12
+b[]:  1
+i[]:  12
+d[]:  12
+ll[]:  12
+ld[]:  12
+
+testing 123
+b[]:  1
+i[]:  123
+d[]:  123
+ll[]:  123
+ld[]:  123
+
+testing 1234
+b[]:  1
+i[]:  1234
+d[]:  1234
+ll[]:  1234
+ld[]:  1234
+
+testing 12345
+b[]:  1
+i[]:  12345
+d[]:  12345
+ll[]:  12345
+ld[]:  12345
+
+testing 123456
+b[]:  1
+i[]:  123456
+d[]:  123456
+ll[]:  123456
+ld[]:  123456
+
+testing 1234567
+b[]:  1
+i[]:  1234567
+d[]:  1.23457e+06
+ll[]:  1234567
+ld[]:  1.23457e+06
+
+testing 12345678
+b[]:  1
+i[]:  12345678
+d[]:  1.23457e+07
+ll[]:  12345678
+ld[]:  1.23457e+07
+
+testing 123456789
+b[]:  1
+i[]:  123456789
+d[]:  1.23457e+08
+ll[]:  123456789
+ld[]:  1.23457e+08
+
+testing 1234567890
+b[]:  1
+i[]:  1234567890
+d[]:  1.23457e+09
+ll[]:  1234567890
+ld[]:  1.23457e+09
+
+testing 12345678901
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+10
+ll[]:  12345678901
+ld[]:  1.23457e+10
+
+testing 123456789012
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+11
+ll[]:  123456789012
+ld[]:  1.23457e+11
+
+testing 1234567890123
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+12
+ll[]:  1234567890123
+ld[]:  1.23457e+12
+
+testing 12345678901234
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+13
+ll[]:  12345678901234
+ld[]:  1.23457e+13
+
+testing 123456789012345
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+14
+ll[]:  123456789012345
+ld[]:  1.23457e+14
+
+testing 1234567890123456
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+15
+ll[]:  1234567890123456
+ld[]:  1.23457e+15
+
+testing 12345678901234567
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+16
+ll[]:  12345678901234567
+ld[]:  1.23457e+16
+
+testing 123456789012345678
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+17
+ll[]:  123456789012345678
+ld[]:  1.23457e+17
+
+testing 1234567890123456789
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+18
+ll[]:  1234567890123456789
+ld[]:  1.23457e+18
+
+testing 12345678901234567890
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+19
+ll[]: exception 0
+ld[]:  1.23457e+19
+
+testing 123456789012345678901
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+20
+ll[]: exception 0
+ld[]:  1.23457e+20
+
+testing 1234567890123456789012
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+21
+ll[]: exception 0
+ld[]:  1.23457e+21
+
+testing 12345678901234567890123
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+22
+ll[]: exception 0
+ld[]:  1.23457e+22
+
+testing 123456789012345678901234
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+23
+ll[]: exception 0
+ld[]:  1.23457e+23
+
+testing 1234567890123456789012345
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+24
+ll[]: exception 0
+ld[]:  1.23457e+24
+
+testing 12345678901234567890123456
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+25
+ll[]: exception 0
+ld[]:  1.23457e+25
+
+testing 123456789012345678901234567
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+26
+ll[]: exception 0
+ld[]:  1.23457e+26
+
+testing 1234567890123456789012345678
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+27
+ll[]: exception 0
+ld[]:  1.23457e+27
+
+testing 12345678901234567890123456789
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+28
+ll[]: exception 0
+ld[]:  1.23457e+28
+
+testing 123456789012345678901234567890
+b[]: exception 0
+i[]: exception 0
+d[]:  1.23457e+29
+ll[]: exception 0
+ld[]:  1.23457e+29
+
+testing -1
+b[]: exception 0
+i[]: exception 0
+d[]:  -1
+ll[]:  -1
+ld[]:  -1
+
+testing -12
+b[]: exception 0
+i[]: exception 0
+d[]:  -12
+ll[]:  -12
+ld[]:  -12
+
+testing -123
+b[]: exception 0
+i[]: exception 0
+d[]:  -123
+ll[]:  -123
+ld[]:  -123
+
+testing -1234
+b[]: exception 0
+i[]: exception 0
+d[]:  -1234
+ll[]:  -1234
+ld[]:  -1234
+
+testing -12345
+b[]: exception 0
+i[]: exception 0
+d[]:  -12345
+ll[]:  -12345
+ld[]:  -12345
+
+testing -123456
+b[]: exception 0
+i[]: exception 0
+d[]:  -123456
+ll[]:  -123456
+ld[]:  -123456
+
+testing -1234567
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+06
+ll[]:  -1234567
+ld[]:  -1.23457e+06
+
+testing -12345678
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+07
+ll[]:  -12345678
+ld[]:  -1.23457e+07
+
+testing -123456789
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+08
+ll[]:  -123456789
+ld[]:  -1.23457e+08
+
+testing -1234567890
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+09
+ll[]:  -1234567890
+ld[]:  -1.23457e+09
+
+testing -12345678901
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+10
+ll[]:  -12345678901
+ld[]:  -1.23457e+10
+
+testing -123456789012
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+11
+ll[]:  -123456789012
+ld[]:  -1.23457e+11
+
+testing -1234567890123
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+12
+ll[]:  -1234567890123
+ld[]:  -1.23457e+12
+
+testing -12345678901234
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+13
+ll[]:  -12345678901234
+ld[]:  -1.23457e+13
+
+testing -123456789012345
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+14
+ll[]:  -123456789012345
+ld[]:  -1.23457e+14
+
+testing -1234567890123456
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+15
+ll[]:  -1234567890123456
+ld[]:  -1.23457e+15
+
+testing -12345678901234567
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+16
+ll[]:  -12345678901234567
+ld[]:  -1.23457e+16
+
+testing -123456789012345678
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+17
+ll[]:  -123456789012345678
+ld[]:  -1.23457e+17
+
+testing -1234567890123456789
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+18
+ll[]:  -1234567890123456789
+ld[]:  -1.23457e+18
+
+testing -12345678901234567890
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+19
+ll[]: exception 0
+ld[]:  -1.23457e+19
+
+testing -123456789012345678901
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+20
+ll[]: exception 0
+ld[]:  -1.23457e+20
+
+testing -1234567890123456789012
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+21
+ll[]: exception 0
+ld[]:  -1.23457e+21
+
+testing -12345678901234567890123
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+22
+ll[]: exception 0
+ld[]:  -1.23457e+22
+
+testing -123456789012345678901234
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+23
+ll[]: exception 0
+ld[]:  -1.23457e+23
+
+testing -1234567890123456789012345
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+24
+ll[]: exception 0
+ld[]:  -1.23457e+24
+
+testing -12345678901234567890123456
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+25
+ll[]: exception 0
+ld[]:  -1.23457e+25
+
+testing -123456789012345678901234567
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+26
+ll[]: exception 0
+ld[]:  -1.23457e+26
+
+testing -1234567890123456789012345678
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+27
+ll[]: exception 0
+ld[]:  -1.23457e+27
+
+testing -12345678901234567890123456789
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+28
+ll[]: exception 0
+ld[]:  -1.23457e+28
+
+testing -123456789012345678901234567890
+b[]: exception 0
+i[]: exception 0
+d[]:  -1.23457e+29
+ll[]: exception 0
+ld[]:  -1.23457e+29
+

@@ -1,0 +1,8 @@
+adm|x|3|4|adm|_var_adm|_sbin_nologin
+ftp|x|14|50|FTP User|_var_ftp|_sbin_nologin
+operator|x|11|0|operator|_root|_sbin_nologin
+privoxy|x|73|73|DUMMY|_etc_privoxy|
+root|x|0|0|root|_root|_bin_bash
+rpc|x|32|32|Portmapper RPC user|_|_sbin_nologin
+rpm|x|37|37|DUMMY|_var_lib_rpm|_bin_bash
+smmsp|x|51|51|DUMMY|_var_spool_mqueue|_sbin_nologin

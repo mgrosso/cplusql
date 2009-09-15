@@ -1,0 +1,48 @@
+use the standard cvs log mechanism to update this file with every release.
+
+Mon Dec 13 16:46:05 EST 2004
+
+cvs tarballs imported to sourceforge.
+
+Sat Apr  5 00:58:27 EST 2003
+
+CplusqlContext.h
+    - eliminate unused functions that mapped relations to "unsigned" ids that were
+      really pointers
+    - added functions to get/set Maps using names
+
+CplusqlContext.cpp:
+    - eliminate unused functions that mapped relations to "unsigned" ids that were
+      really pointers
+    - added functions to get/set Maps using names
+
+cplusql.h
+    - add map functions, map_from_relation, map_from_config, map_value, map_exists
+    - add sync, and implement run() as a call to sync()
+    - added function to create and return an abort expression.
+
+cplusql.cpp:
+    - add map functions, map_from_relation, map_from_config, map_value, map_exists
+    - add sync, and implement run() as a call to sync()
+    - added function to create and return an abort expression.
+    - yacc/lexx code must deal with raw pointers, as it is c code which wouldnt
+      respect our smart ptrs. we must delete them, but now, rather then manually
+      deleting strings and other objects at the end of functions, we create ptr for
+      them at the beginning of the function. this is more exception safe, should we
+      ever need to handle exceptions without leaking memory. Every cplusql function must
+      create ptr for each of its args that it would otherwise delete prior to doing 
+      anything that might throw.
+
+cplusql.l
+    - fixed bug in which "" caused syntax error because only the stuff before
+      the second quote returns the string. now we use a static variable (lexx
+      needs c, not c++) to track whether or not this opening quote has returned
+      a string, and return an empty string if need be.
+    - added support for new keywords, sync, map, map_value, map_exists, and abort
+
+cplusql.y
+    sync statement.
+    create map from relation statement.
+    create map from config statement.
+    added expressions mapvalue, mapexists, and abort. abort is still untested.
+

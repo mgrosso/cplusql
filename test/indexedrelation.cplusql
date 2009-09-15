@@ -1,0 +1,61 @@
+create dbconnection lkdw ( "${DBUSER}", "${DBPASS}", "${DBURL}" )
+;
+
+create hashed_table hashed template "/home/djain/bi/cplusql/test/indexedrelation.%s.loc" query "select day_key,day_desc,year,day_of_week from day_dim_%s where day_key = ? and day_desc = ?" buckets 1 columns (day_key, day_desc,year,day_of_week)
+;
+
+create map day_key_day_desc_m using hashed to day_desc
+;
+create map day_key_year_m using hashed to year
+;
+create map day_key_day_of_week_m using hashed to day_of_week
+;
+
+create stream day_dim using dbconnection lkdw
+query "select day_key, day_desc, day_of_week, day_name, year, calendar_month_name, calendar_year from day_dim"
+columns (day_key, day_desc, day_of_week, day_name, year, calendar_month_name, calendar_year)
+;
+
+create stream day_dimi using day_dim
+where 
+	!(day_key < 1500)
+and
+	(day_key < 1600)
+;
+
+#where clause expressions get evaluated last
+#so if the above where clause
+#had been applied to this stream,
+#a lookup into the hashed table would
+#be fore
+create stream day_dim2 using day_dimi
+usercolumns
+	day_desc2 map_value(day_key_day_desc_m, (day_key,day_desc), "ARGH")
+,	yy map_value(day_key_year_m, (day_key,day_desc), "ARGH")
+,	ex map_exists(day_key_year_m, (day_key,day_desc))
+;
+
+create dest from day_dim2 filename "indexedrelation.output.out"
+;
+
+#--------thread 2------------------------
+create stream day_dim_db_thread2 using dbconnection lkdw
+query "select day_key, day_desc, day_of_week, day_name, year, calendar_month_name, calendar_year from day_dim"
+columns (day_key, day_desc, day_of_week, day_name, year, calendar_month_name, calendar_year)
+;
+
+create stream day_dim2i using day_dim_db_thread2
+where 
+	!(day_key < 1500)
+and
+	(day_key < 2500)
+;
+
+create stream day_dim_thread2 using day_dim2i
+usercolumns
+	day_desc2 map_value(day_key_day_desc_m, (day_key, day_desc), "ARGH")
+,	dow map_value(day_key_day_of_week_m, (day_key, day_desc), "ARGH")
+;
+
+create dest from day_dim_thread2 filename "indexedrelation.output2.out"
+;

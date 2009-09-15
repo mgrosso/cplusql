@@ -1,0 +1,29 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      sync.txt
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: sync.cplusql,v 1.2 2003/07/08 23:44:46 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream passwd using files ( "sync.input.txt" ) delimiter ":"
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+create dest from passwd filename "sync.output.out" ;
+
+sync ;
+create stream passwd2 using files ( "sync.output.out" )
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+create dest from passwd2 filename "sync.output2.out" ;
+
+sync ;
+create stream passwd3 using files ( "sync.output2.out" )
+    columns ( uname,pass,uid,gid,fullname,home_dir,shell ) ;
+create dest from passwd3 filename "sync.output3.out" ;
+

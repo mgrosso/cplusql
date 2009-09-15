@@ -1,0 +1,4 @@
+create namespace nss ;
+namespace nss touch "mvdest" ( EXCLUSIVE=0, COPIES=0 );
+namespace nss touch "mvsrc" ( EXCLUSIVE=0, COPIES=0 );
+namespace nss mv "mvsrc" "mvdest" ;

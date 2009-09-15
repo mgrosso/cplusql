@@ -1,0 +1,25 @@
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+##
+## File:      bjork.cplusql
+## Author:    mgrosso Matthew Grosso
+## Created:   Sun Aug 11 21:20:45 EDT 2002 on circe
+## Project:   
+## Purpose:   unit test iconv() functionality
+## 
+## Copyright (c) 2002 LookSmart Inc.  All Rights Reserved.
+## 
+## $Id: bjork.cplusql,v 1.1 2005/01/02 01:06:09 mgrosso Exp $
+## ----------------------------------------------------------------------
+## ----------------------------------------------------------------------
+
+create stream bjorkin using files ( "bjork.input.txt" ) delimiter "|"
+    columns ( c1 );
+
+create stream bjork2 using bjorkin 
+    usercolumns
+        norm_2_iso      iconv( c1, "ISO-8859-1", "UTF-8" ),
+        norm_2_ascii    normalize( iconv( c1, "ISO-8859-1", "UTF-8" ),(),())
+    ;
+
+create dest from bjork2 filename "bjork.output.txt" ;
