@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------
 
 #include <string>
+#include <string.h>
 #include <list>
 
 #include "BaseException.h"

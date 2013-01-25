@@ -13,6 +13,8 @@
 // $Id: StrEqualsExpression.cpp,v 1.4 2004/01/16 21:45:27 djain Exp $
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
+
+#include <string.h>
 #include "StrEqualsExpression.h"
 #include "BinaryExpressionPriv.h"
 #include "dbg.h"

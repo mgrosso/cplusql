@@ -19,6 +19,7 @@
 #include "libpq-fe.h"
 #include <string>
 #include <strings.h>
+#include <string.h>
 
 #include "PgCopyByteSource.h"
 #include "BaseException.h"

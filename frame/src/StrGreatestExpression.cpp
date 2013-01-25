@@ -13,7 +13,7 @@
 // ----------------------------------------------------------------------
 
 #include "StrGreatestExpression.h"
-#include <stdio.h>
+#include <string.h>
 
 StrGreatestExpression::StrGreatestExpression(ExpressionList &args )
 :CompareListExpression(args)

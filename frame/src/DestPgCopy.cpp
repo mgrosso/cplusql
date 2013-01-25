@@ -17,6 +17,7 @@
 
 #include <list>
 #include <string>
+#include <string.h>
 
 #include "DestPgCopy.h"
 #include "ptr_strdup.h"

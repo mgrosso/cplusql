@@ -38,6 +38,7 @@
 
 #include "ptr_strdup.h"
 #include <string.h>
+#include <stdio.h>
 
 #define NEED_HASH_MAP
 #include "frame_config.h"

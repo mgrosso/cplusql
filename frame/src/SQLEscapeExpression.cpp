@@ -14,6 +14,7 @@
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 
+#include <string.h>
 #include "SQLEscapeExpression.h"
 #include "ByteBuf.h"
 #include "BaseException.h"

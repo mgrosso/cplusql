@@ -14,6 +14,7 @@
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 
+#include <stdio.h>
 #include "LongLongFormatExpression.h"
 
 class LongLongFormatExpressionPriv 

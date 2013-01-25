@@ -16,6 +16,7 @@
 
 #include <map>
 #include <algorithm>
+#include <string.h>
 #include "BaseException.h"
 #include "ExpressionStringMap.h"
 #include "ptr_strdup.h"

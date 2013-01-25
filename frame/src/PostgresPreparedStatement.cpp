@@ -16,6 +16,7 @@
 #ifdef FRAME_USES_POSTGRES
 
 #include <vector>
+#include <string.h>
 #include "db/DBException.h"
 #include "db/PostgresPreparedStatement.h"
 

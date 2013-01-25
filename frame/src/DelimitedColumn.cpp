@@ -20,6 +20,8 @@
 #include "BaseException.h"
 #include "Parse.h"
 #include <stdio.h>
+#include <string.h>
+#include <limits.h>
 
 class DelimitedColumnPriv
 {

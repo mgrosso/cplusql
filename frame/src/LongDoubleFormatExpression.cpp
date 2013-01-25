@@ -12,6 +12,7 @@
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 
+#include <stdio.h>
 #include "LongDoubleFormatExpression.h"
 #include "RangedUnaryArithmeticExpressionPriv.h"
 

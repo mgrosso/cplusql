@@ -18,6 +18,7 @@
 #include "BaseException.h"
 #include "Convert.h"
 #include <stdio.h>
+#include <string.h>
 
 char *
 strdup_len( const char *in, size_t sz )

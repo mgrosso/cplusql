@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "cplusql_api.h"
 #include "CplusqlExceptionHandling.h"
 #include "AppLog.h"

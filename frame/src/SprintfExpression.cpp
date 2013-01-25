@@ -20,6 +20,7 @@
 #include "AppLog.h"
 #include "ByteBuf.h"
 #include <stdio.h>
+#include <string.h>
 
     
 

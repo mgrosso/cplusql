@@ -23,6 +23,7 @@ using namespace std;
 #include "frame_config.h"
 
 #include <string>
+#include <string.h>
 #include "ptr.h"
 #include "ptr_strdup.h"
 #include "BasicHashAlg.h"

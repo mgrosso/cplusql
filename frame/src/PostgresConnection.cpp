@@ -49,13 +49,13 @@ PostgresConnection::PostgresConnection( const char* dbuser,
     {
 	PANICV("Invalid url. Expected: hostname[:port]/dbname");
     }
-    char * t = rindex(dburl, '/');
+    const char * t = rindex(dburl, '/');
     dbname = string(t+1);
 
     string temp_url(dburl);
     temp_url = temp_url.substr(0, temp_url.length() - (dbname.length() + 1));
 
-    char * temp_port = strchr(temp_url.c_str(), ':');
+    const char * temp_port = strchr(temp_url.c_str(), ':');
     if(temp_port == NULL)
     {
 		char tmp_port[5];

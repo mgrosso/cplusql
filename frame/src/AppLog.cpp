@@ -21,6 +21,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 #include <pthread.h>
+#include <string.h>
 
 #include "frame_config.h"
 #include "AppLog.h"

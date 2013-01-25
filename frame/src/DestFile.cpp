@@ -18,7 +18,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif /*  HAVE_UNISTD_H */
-
+#include <string.h>
 #include "DestFile.h"
 #include "BaseException.h"
 #include "fwrap.h"

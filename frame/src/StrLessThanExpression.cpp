@@ -13,6 +13,7 @@
 // $Id: StrLessThanExpression.cpp,v 1.4 2004/01/16 21:45:27 djain Exp $
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
+#include <string.h>
 #include "StrLessThanExpression.h"
 #include "BinaryExpressionPriv.h"
 #include "dbg.h"

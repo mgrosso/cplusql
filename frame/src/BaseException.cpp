@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include <string.h>
 #include <stdarg.h>
 #include <signal.h>
 #include <unistd.h>

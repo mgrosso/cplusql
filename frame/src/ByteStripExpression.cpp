@@ -14,6 +14,7 @@
 // ----------------------------------------------------------------------
 // ----------------------------------------------------------------------
 
+#include <string.h>
 #include "ByteStripExpression.h"
 #include "ByteBuf.h"
 #include "BaseException.h"

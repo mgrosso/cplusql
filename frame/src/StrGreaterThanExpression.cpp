@@ -15,6 +15,7 @@
 #include "StrGreaterThanExpression.h"
 #include "BinaryExpressionPriv.h"
 #include <stdio.h>
+#include <string.h>
 
 
 StrGreaterThanExpression::StrGreaterThanExpression( 

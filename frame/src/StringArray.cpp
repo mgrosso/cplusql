@@ -13,6 +13,7 @@
 // ----------------------------------------------------------------------
 
 #include <vector>
+#include <string.h>
 #include "StringArray.h"
 
 #include "ByteBuf.h"

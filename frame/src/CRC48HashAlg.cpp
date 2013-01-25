@@ -16,6 +16,7 @@
 #include "CRC48HashAlg.h"
 #include "ptr_strdup.h"
 #include <string>
+#include <string.h>
 
 //long long CRC48HashAlg::crc48table [256] ;
 CRC48HashAlg *CRC48HashAlg::instance_ ;

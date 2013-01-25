@@ -13,7 +13,7 @@
 // ----------------------------------------------------------------------
 
 #include "StrLeastExpression.h"
-#include <stdio.h>
+#include <string.h>
 
 StrLeastExpression::StrLeastExpression(ExpressionList &args )
 :CompareListExpression(args)

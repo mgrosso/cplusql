@@ -17,6 +17,7 @@
 
 #include <map>
 #include <vector>
+#include <string.h>
 #include "hashFuncs.h"
 #include "RelationMeta.h"
 #include "BaseException.h"
