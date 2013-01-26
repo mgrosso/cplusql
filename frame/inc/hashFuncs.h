@@ -23,6 +23,7 @@ using namespace std;
 #include "frame_config.h"
 
 #include <string>
+#include <unordered_map>
 #include <string.h>
 #include "ptr.h"
 #include "ptr_strdup.h"
@@ -95,15 +96,15 @@ struct keys_equal
     }
 };
 
-typedef hash_map<string, string, string_hash, strings_equal> string_to_string_hash;
-typedef hash_map<string, long, string_hash, strings_equal> string_to_long_hash;
-typedef hash_map<long, string> long_to_string_hash;
-typedef hash_map<int, long> result_to_long_hash;
-typedef hash_map<long, bool> long_to_bool_hash;
-typedef hash_map<out_key_t, bool, key_hash, keys_equal> key_to_bool_hash;
-typedef hash_map<string, out_key_t, string_hash, strings_equal>
+typedef unordered_map<string, string, string_hash, strings_equal> string_to_string_hash;
+typedef unordered_map<string, long, string_hash, strings_equal> string_to_long_hash;
+typedef unordered_map<long, string> long_to_string_hash;
+typedef unordered_map<int, long> result_to_long_hash;
+typedef unordered_map<long, bool> long_to_bool_hash;
+typedef unordered_map<out_key_t, bool, key_hash, keys_equal> key_to_bool_hash;
+typedef unordered_map<string, out_key_t, string_hash, strings_equal>
     string_to_key_hash;
-typedef hash_map<out_key_t, string, key_hash, keys_equal> key_to_string_hash;
+typedef unordered_map<out_key_t, string, key_hash, keys_equal> key_to_string_hash;
 
 #endif /* HASHFUNCS_H */
 
