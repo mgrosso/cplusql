@@ -1137,7 +1137,7 @@ cplusql_bytestrip_exp(
         Expression *e = new ByteStripExpression(
             //operandp, psqueeze.get(), pskip.get(), pfrom.get(), pto.get());
             operandp, squeeze, skip, from, to );
-        APPLOG_DBG("new ByteStripExpression %lx", reinterpret_cast<unsigned int>(e) );
+        APPLOG_DBG("new ByteStripExpression %lx", reinterpret_cast<size_t>(e) );
         return e;
     }
     CPLUSQL_CATCHALL();
