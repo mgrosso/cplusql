@@ -43,7 +43,7 @@
 #define NEED_HASH_MAP
 #include "frame_config.h"
 
-#include <ext/hash_map>
+#include "hashFuncs.h"
 #include <iterator>
 #include <list>
 #include <limits.h>
@@ -163,7 +163,7 @@ private:
 	long maxSize_;
 	long currSize_;
 
-	typedef hash_map<const char *, CacheEntry<T> *, hash<const char *>, eqstr> CacheType;
+	typedef unordered_map<const char *, CacheEntry<T> *, cc_less_than, eqstr> CacheType;
 	typedef list<const char *> UsageType;
 
 	CacheType cache_;
