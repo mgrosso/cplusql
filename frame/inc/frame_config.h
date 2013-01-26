@@ -161,7 +161,7 @@ typedef frame_thread_return_t       (*frame_thread_function)(void *);
 #if defined(HAVE_HASH_MAP_H)
 #include <hash_map.h>
 #else
-#error Cant find hash_map header 
+#include <unordered_map>
 #endif /* HAVE_HASH_MAP_H */
 #endif /* HAVE_STL */
 #endif /* HAVE_EXT_HASH_MAP */
